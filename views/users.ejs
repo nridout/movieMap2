@@ -1,0 +1,13 @@
+<% include ./partials/header %>
+
+<div class="container">
+  <p>Where all the users appear</p>
+  <ul>
+    <% for (var user of users) { %>
+    <li><%= user.username %>, <%= user.email%> - <a href="/users/<%= user.username %>">link</a></li>
+    <% } %>
+  </ul>
+</div>
+
+
+<% include ./partials/footer %>

@@ -35,9 +35,6 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-// Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
-
 // Home page
 app.get("/", (req, res) => {
   res.status(200).render("main");
@@ -58,6 +55,9 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   res.status(200).send("Not implemented");
 });
+
+// Mount all resource routes
+app.use("/api/users", usersRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

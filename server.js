@@ -53,11 +53,31 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.status(200).send("Not implemented");
+  knex.select('*').from('users')
+  .where(function () {
+    this.where('email', req.body.email);
+  })
+  .then(function (rows) {
+    if (rows.length) {
+      if (bcrypt.compareSync(req.body.password, rows[0].password)) {
+        req.session.userid = rows[0].username;
+        return res.redirect("/");
+      } else {
+        return res.status(400).send("error: incorrect password");
+      }
+    } else {
+      return res.status(400).send("error: non-registered email");
+    }
+  });
 });
 
 app.post("/logout", (req, res) => {
-  res.status(200).send("Not implemented");
+  if (req.session) {
+    req.session = null;
+    return res.redirect("/");
+  } else {
+    return res.redirect("/");
+  }
 });
 
 app.get("/register", (req, res) => {

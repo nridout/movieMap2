@@ -45,7 +45,7 @@ app.use(cookieSession({
 
 // Home page
 app.get("/", (req, res) => {
-  res.status(200).render("main");
+  res.status(200).render("index");
 });
 
 app.get("/login", (req, res) => {
@@ -56,12 +56,38 @@ app.post("/login", (req, res) => {
   res.status(200).send("Not implemented");
 });
 
+app.post("/logout", (req, res) => {
+  res.status(200).send("Not implemented");
+});
+
 app.get("/register", (req, res) => {
-  res.status(200).render("register");
+  res.render("register");
 });
 
 app.post("/register", (req, res) => {
-  res.status(200).send("Not implemented");
+  knex.select('email').from('users')
+  .where(function () {
+    this.where('username', req.body.username);
+  }).orWhere(function () {
+    this.where('email', req.body.email);
+  })
+  .then(function (rows) {
+    if (!rows.length) {
+      const newUser = {
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 10)
+      };
+
+      knex('users').insert([newUser])
+      .then(function (rows) {
+        req.session.userid = username;
+        return res.redirect("/");
+      });
+    } else {
+      return res.status(400).send("error: username or email already taken");
+    }
+  });
 });
 
 // Mount all resource routes

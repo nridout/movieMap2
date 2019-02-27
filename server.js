@@ -64,7 +64,7 @@ app.post("/login", (req, res) => {
   .then(function (rows) {
     if (rows.length) {
       if (bcrypt.compareSync(req.body.password, rows[0].password)) {
-        req.session.userid = rows[0].username;
+        req.session.userid = rows[0].id;
         return res.redirect("/maps");
       } else {
         return res.status(400).send("error: incorrect password");
@@ -89,7 +89,7 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  knex.select('email').from('users')
+  knex.select('*').from('users')
   .where(function () {
     this.where('username', req.body.username);
   }).orWhere(function () {
@@ -105,8 +105,14 @@ app.post("/register", (req, res) => {
 
       knex('users').insert([newUser])
       .then(function (rows) {
-        req.session.userid = req.body.username;
-        return res.redirect("/maps");
+        knex.select('*').from('users')
+        .where(function () {
+          this.where('username', req.body.username);
+        })
+        .then(function (rows_user) {
+          req.session.userid = rows_user[0].id;
+          return res.redirect("/maps");
+        });
       });
     } else {
       return res.status(400).send("error: username or email already taken");
@@ -135,49 +141,43 @@ app.get("/maps/new", (req, res) => {
 
 app.post("/maps", (req, res) => {
   if (req.session.userid) {
-    knex.select('*').from('users')
+
+    knex.select('*').from('maps')
     .where(function () {
-      this.where('username', req.session.userid);
+      this.where('creator_id', req.session.userid);
     })
-    .then(function (rows_user) {
+    .then(function (rows_maps) {
+      const map_names = [];
+      for (const row in rows_maps) {
+        map_names.push(row.name);
+      }
 
-      knex.select('*').from('maps')
-      .where(function () {
-        this.where('creator_id', rows_user[0].id);
-      })
-      .then(function (rows_maps) {
-        const map_names = [];
-        for (const row in rows_maps) {
-          map_names.push(row.name);
-        }
+      if (!map_names.includes(req.body.name)) {
+        // **TODO: check if location is valid
+        //***********************************
 
-        if (!map_names.includes(req.body.name)) {
-          // **TODO: check if location is valid
-          //***********************************
+        const newMap = {
+          location: req.body.location,
+          name: req.body.name,
+          creator_id: req.session.userid
+        };
 
-          const newMap = {
-            location: req.body.location,
-            name: req.body.name,
-            creator_id: rows_user[0].id
-          };
+        knex('maps').insert([newMap])
+        .then(function () {
 
-          knex('maps').insert([newMap])
-          .then(function () {
-
-            knex.select('*').from('maps')
-            .where(function () {
-              this.where('creator_id', newMap.creator_id);
-            }).andWhere(function () {
-              this.where('name', newMap.name);
-            })
-            .then(function (rows_new) {
-              return res.redirect(`/maps/${rows_new[0].id}`);
-            });
+          knex.select('*').from('maps')
+          .where(function () {
+            this.where('creator_id', newMap.creator_id);
+          }).andWhere(function () {
+            this.where('name', newMap.name);
+          })
+          .then(function (rows_new) {
+            return res.redirect(`/maps/${rows_new[0].id}`);
           });
-        } else {
-          return res.status(400).send("error: duplicate map name");
-        }
-      });
+        });
+      } else {
+        return res.status(400).send("error: duplicate map name");
+      }
     });
   } else {
     return res.redirect("/login");
@@ -192,6 +192,37 @@ app.get("/maps/:id", (req, res) => {
     })
     .then(function (rows) {
       return res.status(200).render("map_page", {map: rows[0], isLogged: true});
+    });
+  } else {
+    return res.redirect("/login");
+  }
+});
+
+app.put("/maps/:id", (req, res) => {
+  if (req.session.userid) {
+    knex.select('*').from('maps')
+    .where(function () {
+      this.where('id', req.params.id);
+    })
+    .then(function (rows_maps) {
+      if (rows_maps[0].creator_id === req.session.userid) {
+        knex('maps')
+        .where(function () {
+          this.where('creator_id', req.session.userid);
+        })
+        .andWhere(function () {
+          this.where('name', rows_maps[0].name);
+        })
+        .update({
+          name: req.body.name,
+          location: req.body.location
+        })
+        .then(function () {
+          return res.redirect(`/maps/${req.params.id}`);
+        });
+      } else {
+        return res.status(401).send("error: unauthorized");
+      }
     });
   } else {
     return res.redirect("/login");

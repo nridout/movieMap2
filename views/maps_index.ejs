@@ -1,7 +1,12 @@
 <% include ./partials/header %>
 
 <div class="container">
-    <p>Where all the maps appear</p>
+  <p>Where all the maps appear</p>
+  <ul>
+    <% for (var map of maps) { %>
+    <li><%= map.name %> - <a href="/maps/<%= map.id %>">link</a></li>
+    <% } %>
+  </ul>
 </div>
 
 

@@ -14,6 +14,9 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -34,9 +37,11 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.KEY1, process.env.KEY2] // Change the keys value into some strings for testing
+}));
 
-// Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
@@ -58,6 +63,9 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   res.status(200).send("Not implemented");
 });
+
+// Mount all resource routes
+app.use("/api/users", usersRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

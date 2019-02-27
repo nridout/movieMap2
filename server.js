@@ -40,7 +40,23 @@ app.use("/api/users", usersRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.status(200).render("main");
+});
+
+app.get("/login", (req, res) => {
+  res.status(200).render("login");
+});
+
+app.post("/login", (req, res) => {
+  res.status(200).send("Not implemented");
+});
+
+app.get("/register", (req, res) => {
+  res.status(200).render("register");
+});
+
+app.post("/register", (req, res) => {
+  res.status(200).send("Not implemented");
 });
 
 app.listen(PORT, () => {

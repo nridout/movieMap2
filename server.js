@@ -230,6 +230,34 @@ app.put("/maps/:id", (req, res) => {
   }
 });
 
+app.delete("/maps/:id", (req, res) => {
+  if (req.session.userid) {
+    knex.select('*').from('maps')
+    .where(function () {
+      this.where('id', req.params.id);
+    })
+    .then(function (rows_maps) {
+      if (rows_maps[0].creator_id === req.session.userid) {
+        knex('maps')
+        .where(function () {
+          this.where('creator_id', req.session.userid);
+        })
+        .andWhere(function () {
+          this.where('name', rows_maps[0].name);
+        })
+        .del()
+        .then(function () {
+          return res.redirect("/maps");
+        });
+      } else {
+        return res.status(401).send("error: unauthorized");
+      }
+    });
+  } else {
+    return res.redirect("/login");
+  }
+});
+
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 

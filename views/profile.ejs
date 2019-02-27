@@ -1,0 +1,23 @@
+<% include ./partials/header %>
+
+<div class="container">
+  <p>Where each map appears</p>
+
+  <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
+    <div class="form-group mb-2">
+      <label for="email">Name:</label>
+      <input class="form-control ml-0" type="text" name="name" placeholder="<%= map.name %>" required>
+      <label for="email">Location:</label>
+      <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>" required>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </form>
+
+  <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+
+</div>
+
+
+<% include ./partials/footer %>

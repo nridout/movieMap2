@@ -49,12 +49,12 @@ app.get("/", (req, res) => {
   if (req.session.userid) {
     return res.status(200).redirect("/maps");
   } else {
-    return res.status(200).render("index", {isLogged: false});
+    return res.status(200).render("index", {isLogged: false, username: ""});
   }
 });
 
 app.get("/login", (req, res) => {
-  return res.status(200).render("login", {isLogged: false});
+  return res.status(200).render("login", {isLogged: false, username: ""});
 });
 
 app.post("/login", (req, res) => {
@@ -86,7 +86,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  res.render("register", {isLogged: false});
+  res.render("register", {isLogged: false, username: ""});
 });
 
 app.post("/register", (req, res) => {
@@ -123,9 +123,15 @@ app.post("/register", (req, res) => {
 
 app.get("/maps", (req, res) => {
   if (req.session.userid) {
-    knex.select('*').from('maps')
-    .then(function (rows) {
-      return res.status(200).render("maps_index", {maps: rows, isLogged: true});
+    knex.select('*').from('users')
+    .where(function () {
+      this.where('id', req.session.userid);
+    })
+    .then(function (rows_user) {
+      knex.select('*').from('maps')
+      .then(function (rows) {
+        return res.status(200).render("maps_index", {maps: rows, isLogged: true, username: rows_user[0].username});
+      });
     });
   } else {
     return res.redirect("/login");
@@ -134,7 +140,13 @@ app.get("/maps", (req, res) => {
 
 app.get("/maps/new", (req, res) => {
   if (req.session.userid) {
-    return res.status(200).render("new_map", {isLogged: true});
+    knex.select('*').from('users')
+    .where(function () {
+      this.where('id', req.session.userid);
+    })
+    .then(function (rows_user) {
+      return res.status(200).render("new_map", {isLogged: true, username: rows_user[0].username});
+    });
   } else {
     return res.redirect("/login");
   }
@@ -187,12 +199,18 @@ app.post("/maps", (req, res) => {
 
 app.get("/maps/:id", (req, res) => {
   if (req.session.userid) {
-    knex.select('*').from('maps')
+    knex.select('*').from('users')
     .where(function () {
-      this.where('id', req.params.id);
+      this.where('id', req.session.userid);
     })
-    .then(function (rows) {
-      return res.status(200).render("map_page", {map: rows[0], isLogged: true});
+    .then(function (rows_user) {
+      knex.select('*').from('maps')
+      .where(function () {
+        this.where('id', req.params.id);
+      })
+      .then(function (rows) {
+        return res.status(200).render("map_page", {map: rows[0], isLogged: true, username: rows_user[0].username});
+      });
     });
   } else {
     return res.redirect("/login");
@@ -256,6 +274,31 @@ app.delete("/maps/:id", (req, res) => {
   } else {
     return res.redirect("/login");
   }
+});
+
+app.get("/users", (req, res) => {
+  if (req.session.userid) {
+    knex.select('*').from('users')
+    .where(function () {
+      this.where('id', req.session.userid);
+    })
+    .then(function (rows_user) {
+
+      knex.select('username', 'email').from('users')
+      .then(function (rows) {
+        return res.status(200).render("users", {isLogged: true, username: rows_user[0].username, users: rows});
+      });
+    });
+  } else {
+    knex.select('username', 'email').from('users')
+    .then(function (rows) {
+      return res.status(200).render("users", {isLogged: false, username: "", users: rows});
+    });
+  }
+});
+
+app.get("/users/:username", (req, res) => {
+
 });
 
 // Mount all resource routes

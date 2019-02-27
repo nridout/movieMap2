@@ -105,7 +105,7 @@ app.post("/register", (req, res) => {
 
       knex('users').insert([newUser])
       .then(function (rows) {
-        req.session.userid = username;
+        req.session.userid = req.body.username;
         return res.redirect("/maps");
       });
     } else {
@@ -163,6 +163,7 @@ app.post("/maps", (req, res) => {
 
           knex('maps').insert([newMap])
           .then(function (rows_new) {
+            console.log(rows_new);
             return res.redirect(`/maps/${rows_new[0].id}`);
           });
         } else {

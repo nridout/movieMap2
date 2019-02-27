@@ -162,9 +162,17 @@ app.post("/maps", (req, res) => {
           };
 
           knex('maps').insert([newMap])
-          .then(function (rows_new) {
-            console.log(rows_new);
-            return res.redirect(`/maps/${rows_new[0].id}`);
+          .then(function () {
+
+            knex.select('*').from('maps')
+            .where(function () {
+              this.where('creator_id', newMap.creator_id);
+            }).andWhere(function () {
+              this.where('name', newMap.name);
+            })
+            .then(function (rows_new) {
+              return res.redirect(`/maps/${rows_new[0].id}`);
+            });
           });
         } else {
           return res.status(400).send("error: duplicate map name");

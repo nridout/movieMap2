@@ -17,12 +17,14 @@ body {
 .btn:hover {
   background-color: $darkRed;
   border-color: $darkRed;
+  color: #ffffff;
 }
 
 .btn {
   margin: .5em 0.2em 0 0;
   background-color: $darkGrey;
   border-color: $darkGrey;
+  color: #ffffff;
 }
 
 .container {
@@ -106,39 +108,12 @@ body {
   margin-right: 1em;
 }
 
-.nav-item {
+.navbar-nav {
   line-height: 1em;
+  color: $darkGrey
 }
 
-
-.btn:hover {
-  background-color: #3d0300;
-  border-color: #3d0300;
-}
-
-.btn {
-  margin: .5em 0.2em 0 0;
-  background-color: #424242;
-  border-color: #424242;
-}
-
-.logo {
-  height: 100px;
-  line-height: 2em;
-  display: inline-block;
-  margin-top: -4.7em;
-  margin-right: 1em;
-}
-
-p {
-  margin-top: 1.5em;
-}
-
-.login-register {
-  margin-top: 1.3em;
-  text-align: center;
-  margin-bottom: 1.3em;
-}
+// ------------------------- MAP STYLING ------------------------- //
 
 //map div
 #map {
@@ -152,3 +127,133 @@ p {
 }
 
 
+// ------------------------- MAP INDEX PAGE ------------------------- //
+
+.map-index-message {
+  font-size: 1.8em;
+  font-weight: normal;
+  line-height: 1.5;
+  color: $darkGrey;
+  margin-bottom: 3em;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  border: 0;
+  background: transparent;
+  text-align: center;
+  font-style: normal;
+}
+
+.map-list {
+  list-style: none;
+  margin: 0 auto;
+}
+
+.map-object {
+  position: relative;
+  width: 220px;
+  float: left;
+  padding: 0;
+  margin: 0 15px 30px 15px;
+}
+
+.map-boarder {
+  position: relative;
+  clear: left;
+  background: #fff;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+}
+
+.screenshot {
+  height: 150px;
+  width: 200px;
+}
+
+.map-shot {
+  padding: 10px;
+}
+
+.map-img {
+  max-width: 100%;
+  height: 0;
+  padding-bottom: 75%;
+  overflow: hidden;
+}
+
+.map-link {
+  color: $darkRed;
+  text-decoration: none;
+}
+
+.map-name-link {
+  color: $primaryRed;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.map-name-link:hover {
+  color: $darkRed;
+}
+
+.tools {
+  margin: 10px 0 0 0;
+  text-align: left;
+}
+
+.fav {
+  float: right;
+  width: auto;
+  margin: 0 0 0 11px;
+  font-size: 11px;
+  line-height: 1;
+  color: $lightGrey;
+}
+
+// .fav-marked {
+//   float: right;
+//   width: auto;
+//   margin: 0 0 0 11px;
+//   font-size: 11px;
+//   line-height: 1;
+//   color: $lightGrey;
+// }
+
+.toggle-fav {
+  background-image: url('/img/icon-hearts.png');
+  background-size: 12px 45px;
+  padding-left: 15px;
+  background-repeat: no-repeat;
+  background-position: 0 1px;
+}
+
+
+.map-creator {
+  max-height: 16px;
+  margin: 10px 0 0 0;
+  padding: 0 0 0 10px;
+  font-size: .8em;
+  font-weight: 500;
+  line-height: 1.4;
+  color: $lightGrey;
+  vertical-align: middle;
+}
+
+.creator-id {
+  display: inline;
+}
+
+.user-profile-link:hover {
+  font-weight: 500;
+  color: $darkRed
+}
+
+.user-profile-link {
+  font-weight: 500;
+  color: $darkGrey;
+}
+
+a:hover {
+  text-decoration: none;
+}

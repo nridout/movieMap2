@@ -1,55 +1,36 @@
 <% include ./partials/header %>
 
 <div class="container">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id leo justo. Donec ornare feugiat accumsan. Vestibulum
-  molestie iaculis sapien ac placerat. Fusce eget ex sit amet arcu aliquam fermentum id quis velit. Donec facilisis mauris
-  quis nisi pellentesque, sit amet pellentesque tortor iaculis. Mauris leo tellus, bibendum vel tempus ac, lacinia sit
-  amet leo. Duis egestas ex et lacus ultrices, vitae gravida ex faucibus. Quisque convallis, nibh eget eleifend vehicula,
-  diam ipsum elementum nisl, quis rhoncus metus nisl sed ex.</p>
+  <div class="map-index-message">
+    <h2>Check out some recently created maps</h2>
+  </div>
+  <ol class="map-list">
+    <li class="map-object">
+      <div class="map-boarder">
+        <div class="map-shot">
+          <div class="map-img">
+            <a class="map-link" href="#">
+              <picture>
+                <img class="screenshot" src="/img/test-map-scrn.png">
+              </picture>
+            </a>
+          </div>
+          <div class="tools">
+            <a class="map-name-link" href="#">Map Name</a>
+            <div class="fav">
+              <span class="toggle-fav">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="map-creator">
+        <span class="creator-id">
+          <a class="user-profile-link" href="#">Map Creator Username</a>
+        </span>
+      </h2>
+    </li>
+  </ol>
 
-  <p>Aliquam vitae ipsum nec ante semper auctor quis eu tortor. Aenean ac ligula tellus. In mi lectus, egestas commodo
-  sollicitudin ut, suscipit at odio. Fusce accumsan turpis et leo tincidunt, at ullamcorper dolor semper. Proin ac varius
-  magna. Praesent at massa lacinia, luctus tellus ac, blandit ex. Nulla ipsum nisl, molestie nec lacinia eget, sagittis
-  vel nisi.</p>
-
-  <p>Nulla et placerat libero. Praesent nec magna a nisl mattis finibus. Quisque convallis tristique dictum. Nulla euismod
-  urna sapien, ultricies vehicula justo eleifend in. Duis mattis lacus finibus lacus imperdiet tempus. Nam dapibus tortor
-  vitae purus finibus facilisis. Quisque vel ornare justo. Maecenas vitae purus non ante ultricies dignissim sed in orci.
-  Morbi accumsan dolor nec dictum convallis. Pellentesque euismod at ex eu venenatis. Aenean tempus orci at arcu finibus
-  faucibus. Proin convallis elit nulla, in iaculis lectus efficitur sit amet.</p>
-
-  <p>Morbi tempus hendrerit suscipit. Donec ac ipsum eget felis tempus ornare. Integer vel eros enim. Morbi sollicitudin eros
-  nec enim congue imperdiet. Suspendisse id lacus placerat, elementum tortor a, tempor quam. Cras consequat, quam sit amet
-  tempor scelerisque, dolor urna pharetra arcu, eget sodales mauris arcu in magna. Donec consectetur orci eu elit finibus
-  condimentum. Nam rhoncus leo quis semper vestibulum. Proin a elit sed ex ornare malesuada. Fusce dolor purus, varius at
-  consequat et, gravida vel tellus. Curabitur porttitor quis massa laoreet placerat. Curabitur rhoncus non turpis nec
-  placerat. Vivamus ut laoreet sem, ut commodo orci. In tempor, dui non mollis aliquam, lorem libero placerat nisl, quis
-  elementum dolor justo quis tellus. Nunc euismod lacus faucibus sapien laoreet pretium.</p>
-
-  <p>Quisque cursus metus nec velit vulputate rhoncus. Curabitur porttitor nibh imperdiet, condimentum velit a, molestie mi.
-  Sed pharetra leo eu justo pharetra tempus. Maecenas finibus, sapien sed consectetur vehicula, erat arcu tristique est,
-  in dapibus neque enim sed quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
-  himenaeos. Ut sollicitudin nunc nisi, a rutrum nunc viverra sit amet. In elementum ipsum velit, vel pulvinar quam
-  gravida quis. Sed rhoncus ante in mauris semper, id dignissim est varius. Aenean euismod iaculis tellus quis rutrum.
-  Nullam faucibus libero ut ipsum malesuada dignissim. Etiam finibus varius mauris, at sollicitudin urna venenatis sed.
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id leo justo. Donec ornare feugiat accumsan. Vestibulum
-  molestie iaculis sapien ac placerat. Fusce eget ex sit amet arcu aliquam fermentum id quis velit. Donec facilisis mauris
-  quis nisi pellentesque, sit amet pellentesque tortor iaculis. Mauris leo tellus, bibendum vel tempus ac, lacinia sit
-  amet leo. Duis egestas ex et lacus ultrices, vitae gravida ex faucibus. Quisque convallis, nibh eget eleifend vehicula,
-  diam ipsum elementum nisl, quis rhoncus metus nisl sed ex.</p>
-
-  <p>Aliquam vitae ipsum nec ante semper auctor quis eu tortor. Aenean ac ligula tellus. In mi lectus, egestas commodo
-  sollicitudin ut, suscipit at odio. Fusce accumsan turpis et leo tincidunt, at ullamcorper dolor semper. Proin ac varius
-  magna. Praesent at massa lacinia, luctus tellus ac, blandit ex. Nulla ipsum nisl, molestie nec lacinia eget, sagittis
-  vel nisi.</p>
-
-  <p>Nulla et placerat libero. Praesent nec magna a nisl mattis finibus. Quisque convallis tristique dictum. Nulla euismod
-  urna sapien, ultricies vehicula justo eleifend in. Duis mattis lacus finibus lacus imperdiet tempus. Nam dapibus tortor
-  vitae purus finibus facilisis. Quisque vel ornare justo. Maecenas vitae purus non ante ultricies dignissim sed in orci.
-  Morbi accumsan dolor nec dictum convallis. Pellentesque euismod at ex eu venenatis. Aenean tempus orci at arcu finibus
-  faucibus. Proin convallis elit nulla, in iaculis lectus efficitur sit amet.</p>
     <ul>
     <% for (var map of maps) { %>
     <li><%= map.name %> - <a href="/maps/<%= map.id %>">link</a></li>

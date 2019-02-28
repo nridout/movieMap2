@@ -253,6 +253,8 @@ app.put("/maps/:id", (req, res) => {
     .then(function (rows_maps) {
       if (rows_maps[0].creator_id === req.session.userid) {
         // *** TODO: use API to set a new latitude and location if it is changed
+
+
         var nLatitude;
         var nLongitude;
 

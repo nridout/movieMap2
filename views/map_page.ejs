@@ -19,5 +19,74 @@
 
 </div>
 
+<h3> Google Map Example </h3>
+
+ <div id="map"></div>
+
+ <script>
+  function initMap(){
+    var options = {
+    zoom: 13,
+    center: {lat: 43.6532, lng: -79.3832}
+    }
+
+    //new map
+    var map = new google.maps.Map(document.getElementById('map'), options);
+
+    //listen for click on map
+    google.maps.event.addListener(map,'dblclick',
+    function(event){
+      addMarker({coords:event.latLng});
+    })
+
+
+    var markers = [
+      {
+        coords:{lat: 43.6532, lng: -79.3832},
+        iconImage: '/img/clapper-map-icon.png',
+        content:`<h1> Toronto info </h1>`
+      },
+      {
+      coords:{lat: 43.6452, lng: -79.3806}
+      }
+    ]
+
+    markers.forEach(function(marker){
+      addMarker(marker);
+    })
+
+
+    //Add Marker Function
+    function addMarker(properties){
+      var marker = new google.maps.Marker({
+        position: properties.coords,
+        map: map,
+      });
+
+      if(properties.iconImage){
+        marker.setIcon(properties.iconImage)
+      }
+
+      if(properties.content){
+        var infoWindow = new google.maps.InfoWindow({
+          content: properties.content
+        });
+
+        marker.addListener('click', function(){
+          infoWindow.open(map,marker);
+        })
+      }
+    }
+
+
+  }
+
+
+ </script>
+
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key= AIzaSyCE_jyzV5blwMAIm0FZLZoW1_b8bbLSEWU&callback=initMap"
+  type="text/javascript"></script>
+
 
 <% include ./partials/footer %>

@@ -109,7 +109,7 @@ body {
 .nav-item {
   line-height: 1em;
 }
-<<<<<<< HEAD
+
 
 .btn:hover {
   background-color: #3d0300;
@@ -142,10 +142,13 @@ p {
 
 //map div
 #map {
-  height:50vh;
+  height:75vh;
   width:80vw;
+  margin: auto;
+}
+
+.map-title{
+  text-align: center;
 }
 
 
-=======
->>>>>>> master

@@ -14,6 +14,8 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const request     = require('request');
+
 
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
@@ -181,8 +183,12 @@ app.post("/maps", (req, res) => {
         // ** TODO: check if location is valid
         //***********************************
         // AND use API to find latitude/longitude data and also store them
-        var mLatitude;
-        var mLongitude;
+        request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+
+        var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+        var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
 
         const newMap = {
           location: req.body.location,
@@ -206,6 +212,11 @@ app.post("/maps", (req, res) => {
             return res.redirect(`/maps/${rows_new[0].id}`);
           });
         });
+});
+
+
+
+
       } else {
         // ** TODO: has to modify this error handling
         // Ex. make the form submit through AJAX so that an error message is displayed without

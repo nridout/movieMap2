@@ -27,7 +27,7 @@
   function initMap(){
     var options = {
     zoom: 14,
-    center: <%= map.location %>
+    center: {lat:<%= map.latitude %>, lng: <%= map.longitude %>}
     }
 
     //new map

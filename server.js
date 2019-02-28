@@ -254,9 +254,10 @@ app.put("/maps/:id", (req, res) => {
 
         var nLatitude;
         var nLongitude;
+        console.log(req.body.name);
 
         knex('maps')
-        .where(rows_maps[0])
+        .where('id', req.params.id)
         .update({
           name: req.body.name || rows_maps[0].name,
           location: req.body.location || rows_maps[0].location,

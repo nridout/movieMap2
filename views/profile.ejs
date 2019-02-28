@@ -1,21 +1,28 @@
 <% include ./partials/header %>
 
 <div class="container">
-  <p>Where each map appears</p>
+  <p>Where each user appears</p>
 
-  <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
-    <div class="form-group mb-2">
-      <label for="email">Name:</label>
-      <input class="form-control ml-0" type="text" name="name" placeholder="<%= map.name %>" required>
-      <label for="email">Location:</label>
-      <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>" required>
-      <button type="submit" class="btn btn-primary">Update</button>
-    </div>
-  </form>
+  <h3>Created maps</h3>
+  <ul>
+    <% for (var cmap of created) { %>
+    <li><%= cmap.name %>, <%= cmap.location%> - <a href="/maps/<%= cmap.mapid %>">link</a></li>
+    <% } %>
+  </ul>
 
-  <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
-    <button type="submit" class="btn btn-danger">Delete</button>
-  </form>
+  <h3>Favourite maps</h3>
+  <ul>
+    <% for (var fmap of favourite) { %>
+    <li><%= fmap.name %>, <%= fmap.location%> - <a href="/maps/<%= fmap.mapid %>">link</a></li>
+    <% } %>
+  </ul>
+
+  <h3>Contributed maps</h3>
+  <ul>
+    <% for (var cnmap of contributed) { %>
+    <li><%= cnmap.name %>, <%= cnmap.location%> - <a href="/maps/<%= cnmap.mapid %>">link</a></li>
+    <% } %>
+  </ul>
 
 </div>
 

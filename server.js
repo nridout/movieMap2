@@ -299,6 +299,43 @@ app.get("/users", (req, res) => {
 
 app.get("/users/:username", (req, res) => {
 
+  knex.select('maps.id AS mapid', 'location', 'name').from('maps')
+  .innerJoin('users', 'creator_id', 'users.id')
+  .where(function () {
+    this.where('username', req.params.username);
+  })
+  .then(function (rows_created) {
+    // rows_created
+    knex.select('maps.id AS mapid', 'location', 'name').from('maps')
+    .innerJoin('favourite_maps AS fm', 'maps.id', 'fm.map_id')
+    .innerJoin('users', 'fm.user_id', 'users.id')
+    .where(function () {
+      this.where('username', req.params.username);
+    })
+    .then(function (rows_favourite) {
+      // rows_favourite
+      knex.select('maps.id AS mapid', 'location', 'name').from('maps')
+      .innerJoin('contributors AS cn', 'maps.id', 'cn.map_id')
+      .innerJoin('users', 'cn.user_id', 'users.id')
+      .where(function () {
+        this.where('username', req.params.username);
+      })
+      .then(function (rows_contributed) {
+
+        if (req.session.userid) {
+          knex.select('*').from('users')
+          .where(function () {
+            this.where('id', req.session.userid);
+          })
+          .then(function (rows_user) {
+            return res.status(200).render("profile", {isLogged: true, username: rows_user[0].username, created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+          });
+        } else {
+          return res.status(200).render("profile", {isLogged: false, username: "", created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+        }
+      });
+    });
+  });
 });
 
 // Mount all resource routes

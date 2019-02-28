@@ -181,7 +181,8 @@ app.post("/maps", (req, res) => {
         // ** TODO: check if location is valid
         //***********************************
         // AND use API to find latitude/longitude data and also store them
-        const mLatitude, mLongitude;
+        var mLatitude;
+        var mLongitude;
 
         const newMap = {
           location: req.body.location,
@@ -241,14 +242,15 @@ app.put("/maps/:id", (req, res) => {
     .then(function (rows_maps) {
       if (rows_maps[0].creator_id === req.session.userid) {
         // *** TODO: use API to set a new latitude and location if it is changed
-        const nLatitude, nLongitude;
+        var nLatitude;
+        var nLongitude;
 
         knex('maps')
         .where(rows_maps)
         .update({
           name: req.body.name || rows_maps.name,
           location: req.body.location || rows_maps.location,
-          latitude: nLatitude || rows_maps.latitude
+          latitude: nLatitude || rows_maps.latitude,
           longitude: nLongitude || rows_maps.longitude,
         })
         .then(function () {
@@ -380,7 +382,8 @@ app.post("/maps/:id/points", (req, res) => {
       // ** TODO: check if location is valid
       //***********************************
       // AND use API to find latitude/longitude data and also store them
-      const mLatitude, mLongitude;
+      var mLatitude;
+      var mLongitude;
 
       const newPoint = {
         map_id: req.params.id,
@@ -394,7 +397,7 @@ app.post("/maps/:id/points", (req, res) => {
 
       // Check if same name, same latitude and longitude point exists
       knex.select('*').from('points')
-      where({
+      .where({
         map_id: req.params.id,
         name: req.body.name,
         latitude: newPoint.latitude,
@@ -415,7 +418,7 @@ app.post("/maps/:id/points", (req, res) => {
                 user_id: req.session.userid,
                 map_id: req.params.id,
                 point_id: rows_new[0].id
-              }
+              };
 
               knex('contributors').insert([contributed])
               .then(function () {
@@ -446,14 +449,15 @@ app.put("/maps/:id/points/:pointID", (req, res) => {
   if (req.session.userid) {
 
     knex.select('*').from('points')
-    where({
+    .where({
       id: req.params.pointID,
       map_id: req.params.id
     })
     .then(function (rows_point) {
 
       // *** TODO: use API to set a new latitude and location if it is changed
-      const nLatitude, nLongitude;
+      var nLatitude;
+      var nLongitude;
 
       knex('points').where({
         id: req.params.pointID,
@@ -462,7 +466,7 @@ app.put("/maps/:id/points/:pointID", (req, res) => {
       .update({
         name: req.body.name || rows_point.name,
         location: req.body.location || rows_point.location,
-        latitude: nLatitude || rows_point.latitude
+        latitude: nLatitude || rows_point.latitude,
         longitude: nLongitude || rows_point.longitude,
       })
       .then(function () {
@@ -515,7 +519,7 @@ app.post("/maps/:id/favourite", (req, res) => {
     .then(function () {
       return res.status(200).json("true");
       // might not need this return value it is up to the frontend handling
-    })
+    });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
     // users who do not have cookies
@@ -534,7 +538,7 @@ app.delete("/maps/:id/favourite", (req, res) => {
     .then(function () {
       return res.status(200).json("true");
       // ** might not need this return value it is up to the frontend handling
-    })
+    });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
     // users who do not have cookies

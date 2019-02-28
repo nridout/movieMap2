@@ -163,6 +163,7 @@ app.get("/maps/new", (req, res) => {
   }
 });
 
+// *** Make sure empty/only spaces names and location are not passed
 app.post("/maps", (req, res) => {
   if (req.session.userid) {
 
@@ -236,21 +237,19 @@ app.get("/maps/:id", (req, res) => {
 app.put("/maps/:id", (req, res) => {
   if (req.session.userid) {
     knex.select('*').from('maps')
-    .where(function () {
-      this.where('id', req.params.id);
-    })
+    .where('id', req.params.id)
     .then(function (rows_maps) {
       if (rows_maps[0].creator_id === req.session.userid) {
+        // *** TODO: use API to set a new latitude and location if it is changed
+        const nLatitude, nLongitude;
+
         knex('maps')
-        .where(function () {
-          this.where('creator_id', req.session.userid);
-        })
-        .andWhere(function () {
-          this.where('name', rows_maps[0].name);
-        })
+        .where(rows_maps)
         .update({
-          name: req.body.name,
-          location: req.body.location
+          name: req.body.name || rows_maps.name,
+          location: req.body.location || rows_maps.location,
+          latitude: nLatitude || rows_maps.latitude
+          longitude: nLongitude || rows_maps.longitude,
         })
         .then(function () {
           return res.redirect(`/maps/${req.params.id}`);
@@ -365,7 +364,7 @@ app.get("/maps/:id/points", (req, res) => {
       return res.status(200).json(rows_points);
     });
   } else {
-    return res.json("fail");
+    return res.status(401).json("fail");
   }
 });
 
@@ -435,12 +434,50 @@ app.post("/maps/:id/points", (req, res) => {
       return res.status(400).send("error: need name/location for the points");
     }
   } else {
-    return res.status(400).json("fail");
+    return res.status(401).json("fail");
   }
 });
 
-// *** CHANGE FROM TRELLO: Make AJAX call specific to this url of the route
-// The original url in trello is not applicable for deleting points
+// *** CHANGE FROM TRELLO: Changed these two PUT and DELETE route for the points.
+// Make AJAX call specific to this url of the route
+// The original url in trello is not applicable for updating or deleting points
+
+app.put("/maps/:id/points/:pointID", (req, res) => {
+  if (req.session.userid) {
+
+    knex.select('*').from('points')
+    where({
+      id: req.params.pointID,
+      map_id: req.params.id
+    })
+    .then(function (rows_point) {
+
+      // *** TODO: use API to set a new latitude and location if it is changed
+      const nLatitude, nLongitude;
+
+      knex('points').where({
+        id: req.params.pointID,
+        map_id: req.params.id
+      })
+      .update({
+        name: req.body.name || rows_point.name,
+        location: req.body.location || rows_point.location,
+        latitude: nLatitude || rows_point.latitude
+        longitude: nLongitude || rows_point.longitude,
+      })
+      .then(function () {
+        return res.status(200).json("true"); // ** Could use this value, depending on how frontend is handled
+        // might need 'return res.redirect(`/maps/${req.params.id}`);' instead
+      });
+    });
+
+  } else {
+    // ** TODO: this can be fine as it is, ONLY IF the editing button is not shown for
+    // users who do not have cookies
+    return res.status(401).json("false");
+    // might need 'return res.redirect("/login");' instead
+  }
+});
 
 // ** Make sure contributor table is also auto-updated
 app.delete("/maps/:id/points/:pointID", (req, res) => {
@@ -452,17 +489,20 @@ app.delete("/maps/:id/points/:pointID", (req, res) => {
     })
     .del()
     .then(function () {
-      return res.status(200).json("true"); // In case you want to use this value.
+      return res.status(200).json("true"); // ** In case you want to use this value.
       // Or 'return res.redirect(`/maps/${req.params.id}`)' might be what you want
     });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the deleting button is not shown for
     // users who do not have cookies
-    return res.redirect("/login");
+    return res.status(401).json("false");
+    // might need 'return res.redirect("/login");' instead
   }
 });
 
+
 // The following two routes are for AJAX calls to favourite/unfavourite maps
+// *** Two new routes, not from TRELLO
 
 app.post("/maps/:id/favourite", (req, res) => {
   if (req.session.userid) {
@@ -479,7 +519,27 @@ app.post("/maps/:id/favourite", (req, res) => {
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
     // users who do not have cookies
-    return res.redirect("/login");
+    return res.status(401).json("false");
+    // might need 'return res.redirect("/login");' instead
+  }
+});
+
+app.delete("/maps/:id/favourite", (req, res) => {
+  if (req.session.userid) {
+    knex('favourite_maps').where({
+      user_id: req.session.userid,
+      map_id: req.params.id
+    })
+    .del()
+    .then(function () {
+      return res.status(200).json("true");
+      // ** might not need this return value it is up to the frontend handling
+    })
+  } else {
+    // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
+    // users who do not have cookies
+    return res.status(401).json("false");
+    // might need 'return res.redirect("/login");' instead
   }
 });
 

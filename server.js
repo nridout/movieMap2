@@ -521,15 +521,26 @@ app.delete("/maps/:id/points/:pointID", (req, res) => {
 
 app.post("/maps/:id/favourite", (req, res) => {
   if (req.session.userid) {
-    const newFav = {
+    knex.select('*').from('favourite_maps')
+    .where({
       user_id: req.session.userid,
       map_id: req.params.id
-    };
+    })
+    .then(function (rows_match) {
+      if (!rows_match.length) {
+        const newFav = {
+          user_id: req.session.userid,
+          map_id: req.params.id
+        };
 
-    knex('favourite_maps').insert([newFav])
-    .then(function () {
-      return res.status(200).json("true");
-      // might not need this return value it is up to the frontend handling
+        knex('favourite_maps').insert([newFav])
+        .then(function () {
+          return res.status(200).json("true");
+          // might not need this return value it is up to the frontend handling
+        });
+      } else {
+        return res.status(400).json("false");
+      }
     });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
@@ -541,14 +552,26 @@ app.post("/maps/:id/favourite", (req, res) => {
 
 app.delete("/maps/:id/favourite", (req, res) => {
   if (req.session.userid) {
-    knex('favourite_maps').where({
+    knex.select('*').from('favourite_maps')
+    .where({
       user_id: req.session.userid,
       map_id: req.params.id
     })
-    .del()
-    .then(function () {
-      return res.status(200).json("true");
-      // ** might not need this return value it is up to the frontend handling
+    .then(function (rows_match) {
+      if (rows_match.length) {
+
+        knex('favourite_maps').where({
+          user_id: req.session.userid,
+          map_id: req.params.id
+        })
+        .del()
+        .then(function () {
+          return res.status(200).json("true");
+          // ** might not need this return value it is up to the frontend handling
+        });
+      } else {
+        return res.status(400).json("false");
+      }
     });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for

@@ -251,10 +251,12 @@ app.put("/maps/:id", (req, res) => {
       if (rows_maps[0].creator_id === req.session.userid) {
         // *** TODO: use API to set a new latitude and location if it is changed
 
+      request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
+      console.log('error:', error); // Print the error if one occurred
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
-        var nLatitude;
-        var nLongitude;
-        console.log(req.body.name);
+        var nLatitude = JSON.parse(data).results[0].geometry.location.lat;
+        var nLongitude = JSON.parse(data).results[0].geometry.location.lng;
 
         knex('maps')
         .where('id', req.params.id)
@@ -267,6 +269,11 @@ app.put("/maps/:id", (req, res) => {
         .then(function () {
           return res.redirect(`/maps/${req.params.id}`);
         });
+
+      });
+
+
+
       } else {
         // ** TODO: this can be fine as it is, ONLY IF the editing button is not shown for
         // users who are not the creator of the map, in the frontend side

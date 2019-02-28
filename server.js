@@ -344,6 +344,38 @@ app.get("/users/:username", (req, res) => {
   });
 });
 
+// The AJAX call from '/maps/:id' will get the data of all the points of the map
+// from the $.ajax().then(function(data) {}) -> data will be an array of objects
+// where each objects has 'data[i].pid, data[i].pname, data[i].image, and data[i].details'
+// If call fails due to no user cookie, it will send one string 'fail' so data should be
+// checked before making any access.
+app.get("/maps/:id/points", (req, res) => {
+  if (req.session.userid) {
+    knex.select('points.id AS pid', 'points.name AS pname', 'image', 'details')
+    .from('maps').innerJoin('points', 'maps.id', 'points.map_id')
+    .where('maps.id', req.params.id)
+    .then(function (rows_points) {
+      return res.status(200).json(rows_points);
+    });
+  } else {
+    return res.json("fail");
+  }
+});
+
+// Need to pass in name, image, details in the form, name is required
+app.post("/maps/:id/points", (req, res) => {
+  if (req.session.userid) {
+    if (req.body.name.replace(/\s/g, '').length) {
+
+    } else {
+      // *** TODO: handle this error so that name input is required in HTML/EJS
+      return res.status(400).send("error: need name for the points");
+    }
+  } else {
+    return res.json("fail");
+  }
+});
+
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 

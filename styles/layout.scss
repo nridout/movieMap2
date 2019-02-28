@@ -109,3 +109,46 @@ body {
 .nav-item {
   line-height: 1em;
 }
+
+
+.btn:hover {
+  background-color: #3d0300;
+  border-color: #3d0300;
+}
+
+.btn {
+  margin: .5em 0.2em 0 0;
+  background-color: #424242;
+  border-color: #424242;
+}
+
+.logo {
+  height: 100px;
+  line-height: 2em;
+  display: inline-block;
+  margin-top: -4.7em;
+  margin-right: 1em;
+}
+
+p {
+  margin-top: 1.5em;
+}
+
+.login-register {
+  margin-top: 1.3em;
+  text-align: center;
+  margin-bottom: 1.3em;
+}
+
+//map div
+#map {
+  height:75vh;
+  width:80vw;
+  margin: auto;
+}
+
+.map-title{
+  text-align: center;
+}
+
+

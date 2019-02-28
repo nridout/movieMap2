@@ -248,7 +248,7 @@ app.put("/maps/:id", (req, res) => {
     knex.select('*').from('maps')
     .where('id', req.params.id)
     .then(function (rows_maps) {
-      if (rows_maps.creator_id === req.session.userid) {
+      if (rows_maps[0].creator_id === req.session.userid) {
         // *** TODO: use API to set a new latitude and location if it is changed
 
 
@@ -256,12 +256,12 @@ app.put("/maps/:id", (req, res) => {
         var nLongitude;
 
         knex('maps')
-        .where(rows_maps)
+        .where(rows_maps[0])
         .update({
-          name: req.body.name || rows_maps.name,
-          location: req.body.location || rows_maps.location,
-          latitude: nLatitude || rows_maps.latitude,
-          longitude: nLongitude || rows_maps.longitude,
+          name: req.body.name || rows_maps[0].name,
+          location: req.body.location || rows_maps[0].location,
+          latitude: nLatitude || rows_maps[0].latitude,
+          longitude: nLongitude || rows_maps[0].longitude,
         })
         .then(function () {
           return res.redirect(`/maps/${req.params.id}`);

@@ -184,38 +184,35 @@ app.post("/maps", (req, res) => {
         //***********************************
         // AND use API to find latitude/longitude data and also store them
         request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
-        console.log('error:', error); // Print the error if one occurred
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          console.log('error:', error); // Print the error if one occurred
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
-        var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
-        var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+          var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+          var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
 
-        const newMap = {
-          location: req.body.location,
-          name: req.body.name,
-          creator_id: req.session.userid,
-          latitude: mLatitude || 0,
-          longitude: mLongitude || 0
-        };
+          const newMap = {
+            location: req.body.location,
+            name: req.body.name,
+            creator_id: req.session.userid,
+            latitude: mLatitude || 0,
+            longitude: mLongitude || 0
+          };
 
-        knex('maps').insert([newMap])
-        .then(function () {
+          knex('maps').insert([newMap])
+          .then(function () {
 
-          knex.select('*').from('maps')
-          .where({
-            creator_id: newMap.creator_id,
-            name: newMap.name
-          })
-          .then(function (rows_new) {
-            // rows_new is obtained to get the 'id' for the newly created map
-            // similar to registering user
-            return res.redirect(`/maps/${rows_new[0].id}`);
+            knex.select('*').from('maps')
+            .where({
+              creator_id: newMap.creator_id,
+              name: newMap.name
+            })
+            .then(function (rows_new) {
+              // rows_new is obtained to get the 'id' for the newly created map
+              // similar to registering user
+              return res.redirect(`/maps/${rows_new[0].id}`);
+            });
           });
         });
-});
-
-
-
 
       } else {
         // ** TODO: has to modify this error handling
@@ -257,14 +254,15 @@ app.put("/maps/:id", (req, res) => {
 
         var nLatitude;
         var nLongitude;
+        console.log(req.body.name);
 
         knex('maps')
-        .where(rows_maps)
+        .where('id', req.params.id)
         .update({
-          name: req.body.name || rows_maps.name,
-          location: req.body.location || rows_maps.location,
-          latitude: nLatitude || rows_maps.latitude,
-          longitude: nLongitude || rows_maps.longitude,
+          name: req.body.name || rows_maps[0].name,
+          location: req.body.location || rows_maps[0].location,
+          latitude: nLatitude || rows_maps[0].latitude,
+          longitude: nLongitude || rows_maps[0].longitude,
         })
         .then(function () {
           return res.redirect(`/maps/${req.params.id}`);

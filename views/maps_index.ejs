@@ -4,22 +4,20 @@
   <div class="map-index-message">
     <h2>Check out some recently created maps</h2>
   </div>
+  <% for (var map of maps) { %>
   <ol class="map-list">
     <li class="map-object">
       <div class="map-boarder">
         <div class="map-shot">
           <div class="map-img">
-            <a class="map-link" href="#">
+            <a class="map-link" href="/maps/<%= map.id %>">
               <picture>
-                <img class="screenshot" src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=200x150&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
-&markers=color:red%7Clabel:C%7C40.718217,-73.998284
-&key=AIzaSyCri7Bud131ZI5QakCVxsPsV2cDZTQkU2g">
+                <img class="screenshot" src="https://maps.googleapis.com/maps/api/staticmap?center=<%= map.latitude %>,<%= map.longitude %>&zoom=14&size=200x150&key=AIzaSyCri7Bud131ZI5QakCVxsPsV2cDZTQkU2g">
               </picture>
             </a>
           </div>
           <div class="tools">
-            <a class="map-name-link" href="#">Map Name</a>
+            <a class="map-name-link" href="#"><%= map.name %></a>
             <div class="fav">
               <span class="toggle-fav">0</span>
             </div>
@@ -28,18 +26,12 @@
       </div>
       <h2 class="map-creator">
         <span class="creator-id">
-          <a class="user-profile-link" href="#">Map Creator Username</a>
+          <a class="user-profile-link" href="#"><%= map.creator_id %></a>
         </span>
       </h2>
     </li>
   </ol>
-
-    <ul>
-    <% for (var map of maps) { %>
-    <li><%= map.name %> - <a href="/maps/<%= map.id %>">link</a></li>
-    <% } %>
-  </ul>
+  <% } %>
 </div>
-
 
 <% include ./partials/footer %>

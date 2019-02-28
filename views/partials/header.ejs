@@ -28,7 +28,7 @@
       .masthead {
         height: 100vh;
         min-height: 500px;
-        background-image: url('https://i.stack.imgur.com/RdkOb.jpg');
+        background-image: url('/img/mapbkgrd.png');
         background-size: cover;
         background-position: center;
       }
@@ -36,7 +36,7 @@
       .masthead-login {
         height: 100vh;
         min-height: 500px;
-        background-image: url('https://nyoobserver.files.wordpress.com/2015/02/screen-shot-2015-02-06-at-3-27-06-pm.png');
+        background-image: url('/img/mapbkgrd.png');
         background-size: cover;
         background-position: center;
       }
@@ -44,7 +44,7 @@
       .masthead-register {
         height: 100vh;
         min-height: 500px;
-        background-image: url('https://i.imgur.com/Jjdy08J.png');
+        background-image: url('/img/mapbkgrd.png');
         background-size: cover;
         background-position: center;
       }
@@ -54,29 +54,63 @@
         padding: 1rem 2rem;
         min-width: 28rem;
         min-height: 15rem;
-      }
-
-      .btn {
-        margin: .5em 0.2em 0 0;
+        border-radius: 2rem;
       }
 
       .navbar{
         background-color: #F2796A;
+        font-size: 20px;
+      }
+      .nav-logo {
+        height: 50px;
+        margin-right: 1em;
+      }
+
+      .nav-item {
+        line-height: 1em;
       }
 
       .display-2 {
         color: #000000;
         font-family: 'Limelight', cursive;
+        display: inline-block;
+        text-align: right;
+        margin-bottom: -.4em;
+        padding-right: .1em;
+        margin-top: .3em;
+        margin-left: .3em;
+      }
+
+      .btn:hover {
+        background-color: #3d0300;
+        border-color: #3d0300;
       }
 
       .btn {
-        background-color: #5a5353;
-        border-color: #504a4a;
+        margin: .5em 0.2em 0 0;
+        background-color: #424242;
+        border-color: #424242;
       }
 
       .logo {
         height: 100px;
+        line-height: 2em;
+        display: inline-block;
+        margin-top: -4.7em;
+        margin-right: 1em;
       }
+
+      p {
+        margin-top: 1.5em;
+      }
+
+      .login-register {
+        margin-top: 1.3em;
+        text-align: center;
+        margin-bottom: 1.3em;
+      }
+
+
 
     </style>
 
@@ -85,6 +119,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light">
+      <a href="/"><img src="/img/clapper-map.png" class="nav-logo"></a>
       <a class="navbar-brand" href="/">Movie Maps</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

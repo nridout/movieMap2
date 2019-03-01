@@ -130,6 +130,7 @@ body {
   background-color: $darkGrey;
   color: white;
   font-size: 16px;
+  z-index: 5;
 }
 
 .map-header {
@@ -138,19 +139,31 @@ body {
   padding: 4em 2em 1em 2em;
 }
 
-.update-map {
+.update-map-container {
   background-color: $darkGrey;
   color: white;
-  padding: 4em 2em 1em;
-  display: none;
+  padding: 4em 2em 1em 1em;
+  z-index: 4;
+  position: absolute;
+  width: 100%;
+  // display: none;
 }
 
-.update-map button{
+#map-edit-form {
+  margin-top: 0.5em;
+}
+
+#map-edit-form label {
+  margin: 0 1em 0 1em;
+}
+
+#map-edit-form button:hover {
+  background-color: $darkRed;
+}
+
+#map-edit-form button{
   background-color: $lightGrey;
-}
-
-.update-map form {
-  display: inline-flex;
+  margin: 0 0 0 1em;
 }
 
 .map-container {
@@ -159,6 +172,7 @@ body {
   position: relative !important;
   overflow: hidden !important;
   margin-top: 4em;
+  z-index: 3;
 }
 .map-location-container {
   width: 320px;
@@ -257,9 +271,9 @@ body {
 //   font-size: 12px;
 // }
 
-.marker-maker {
-  display: none;
-}
+// .marker-maker {
+//   // display: none;
+// }
 
 .google-map-container {
   height: 100%;

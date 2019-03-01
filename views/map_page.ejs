@@ -21,12 +21,64 @@
   <button class="btn unfav-button" data-id="<%= map.id %>">UnFavourite</button>
 </div>
 
+<!-- MARKER MAKER -->
+
+  <form class="form-inline" action="/maps/<%= map.id%>/points" method="POST" id="markerMaker">
+    <div class="form-group mb-2">
+      <div class="my-2">
+        <label for="name">Name:</label>
+        <input id="markerName" class="form-control mt-0" type="text" name="name" required>
+      </div>
+      <div class="my-2">
+        <label for="location">Location:</label>
+        <input id="markerLocation" class="form-control mt-0" type="text" name="location" required>
+      </div>
+       <div class="my-2">
+        <label for="location">Image:</label>
+        <input id="markerImage" class="form-control mt-0" type="text" name="image" required>
+      </div>
+      <div class="my-2">
+        <label for="location">Details:</label>
+        <input id="markerDetails" class="form-control mt-0" type="text" name="details" required>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+    </div>
+  </form>
+
 
 <h3 class="map-title"> Google Map Example </h3>
 
  <div id="map"></div>
+ <script>
+  $( "#markerMaker" ).submit(function( event ) {
+
+    event.preventDefault();
+    var $form = $('#markerMaker');
+    var formData = $($form).serialize();
+
+    console.log("this is form: ", formData)
+
+    $.ajax({
+      type: "POST",
+      url: $(location).attr("href")+'/points',
+      data: formData,
+    })
+    .done(function(response) {
+      $('#markerName').val('');
+      $('#markerLocation').val('');
+      $('#markerImage').val('');
+      $('#markerDetails').val('');
+    })
+    .fail(function(data){
+      console.log("failure in ajax")
+    })
+
+
+  });
+ </script>
 
  <script>
+
   function initMap(){
     var options = {
     zoom: 14,

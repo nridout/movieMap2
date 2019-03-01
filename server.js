@@ -400,8 +400,17 @@ app.post("/maps/:id/points", (req, res) => {
       // ** TODO: check if location is valid
       //***********************************
       // AND use API to find latitude/longitude data and also store them
-      var mLatitude;
-      var mLongitude;
+
+      request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
+        console.log('error:', error);
+        console.log('statusCode:', response && response.statusCode);
+
+      console.log("this is req-body: ", req.body)
+
+        var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+        var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+
+        console.log("lat long: ", mLatitude, mLongitude)
 
       const newPoint = {
         map_id: req.params.id,
@@ -450,6 +459,10 @@ app.post("/maps/:id/points", (req, res) => {
           res.status(400).json("fail");
         }
       });
+
+});
+
+
     } else {
       // *** TODO: handle this error so that name/location input is required in HTML/EJS
       return res.status(400).send("error: need name/location for the points");

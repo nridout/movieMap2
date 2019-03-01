@@ -176,11 +176,13 @@ app.post("/maps", (req, res) => {
 
       // The map_names array will hold onto every 'names' of maps that user has made
       const map_names = [];
-      for (const row in rows_maps) {
+
+      for (const row of rows_maps) {
         map_names.push(row.name);
       }
-
+      console.log(map_names);
       if (!map_names.includes(req.body.name)) {
+        console.log('can put in~');
         // ** TODO: check if location is valid
         //***********************************
         // AND use API to find latitude/longitude data and also store them
@@ -304,7 +306,8 @@ app.delete("/maps/:id", (req, res) => {
         knex('maps')
         .where({
           creator_id: req.session.userid,
-          name: rows_maps[0].name
+          name: rows_maps[0].name,
+          id: req.params.id
         })
         .del()
         .then(function () {
@@ -365,10 +368,10 @@ app.get("/users/:username", (req, res) => {
           knex.select('*').from('users')
           .where('id', req.session.userid)
           .then(function (rows_user) {
-            return res.status(200).render("profile", {isLogged: true, username: rows_user[0].username, created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+            return res.status(200).render("profile", {isLogged: true, person: req.params.username, username: rows_user[0].username, created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
           });
         } else {
-          return res.status(200).render("profile", {isLogged: false, username: "", created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+          return res.status(200).render("profile", {isLogged: false, person: req.params.username, username: "", created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
         }
       });
     });

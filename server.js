@@ -394,10 +394,83 @@ app.get("/maps/:id/points", (req, res) => {
 // it will send one string 'fail', so data should be checked before making any access.
 app.post("/maps/:id/points", (req, res) => {
   if (req.session.userid) {
-    if (req.body.name.replace(/\s/g, '').length && req.body.location.replace(/\s/g, '').length) {
+
+    if (req.body.name.replace(/\s/g, '').length && req.body.latlng) {
+
+      const lat = parseFloat(req.body.latlng.split("(")[1].split(")")[0].split(",")[0] , 10);
+      const lon = parseFloat(req.body.latlng.split("(")[1].split(")")[0].split(",")[1] , 10);
+
+      request(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
+        // console.log('error:', error);
+        // console.log('statusCode:', response && response.statusCode);
+
+        // console.log("this is req-body: ", req.body);
+
+        const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+        const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+        const mLocation = JSON.parse(data).results[0].formatted_address;
+
+        // console.log("lat long: ", mLatitude, mLongitude);
+
+        const newPoint = {
+          map_id: req.params.id,
+          name: req.body.name,
+          image: req.body.image || "",
+          details: req.body.details || "",
+          location: mLocation || req.body.location,
+          latitude: mLatitude || 0,
+          longitude: mLongitude || 0
+        };
+
+        // Check if same name, same latitude and longitude point exists
+        knex.select('*').from('points')
+        .where({
+          map_id: req.params.id,
+          name: req.body.name,
+          latitude: newPoint.latitude,
+          longitude: newPoint.longitude
+        })
+        .then(function (rows_match) {
+
+          if (!rows_match.length) {
+            knex('points').insert([newPoint])
+            .then(function () {
+
+              knex.select('*').from('points')
+              .where({
+                map_id: req.params.id,
+                name: req.body.name,
+                latitude: newPoint.latitude,
+                longitude: newPoint.longitude
+              })
+              .then(function (rows_new) {
+                // rows_new[0] is the object with info about the new points created
+                // also, insert current user as contributor to the map
+                const contributed = {
+                  user_id: req.session.userid,
+                  map_id: req.params.id,
+                  point_id: rows_new[0].id
+                };
+
+                knex('contributors').insert([contributed])
+                .then(function () {
+                  return res.status(200).json(rows_new[0]);
+                });
+              });
+            });
+          } else {
+            // ** TODO: has to modify this error handling
+            // Ex. make the AJAX receive 'fail' and handle error respectively
+            res.status(400).json("fail");
+          }
+        });
+      });
+
+    } else if (req.body.name.replace(/\s/g, '').length && req.body.location.replace(/\s/g, '').length) {
       // ** TODO: check if location is valid
       //***********************************
       // AND use API to find latitude/longitude data and also store them
+
 
       request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
         // console.log('error:', error);

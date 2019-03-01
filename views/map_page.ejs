@@ -249,54 +249,65 @@
       // });
     }
 
+    var handleInmapPoint = function (e) {
+      event.preventDefault();
+
+      var query = $(e.target).serialize();
+
+
+      $.ajax({
+        type: "POST",
+        url: $(location).attr("href")+'/points',
+        data: query,
+      })
+      .then(function (data) {
+        location.reload();
+      });
+    };
+
     $(".location-list-container").on("click", ".delete-button-point", handleDeletePoint);
     $(".location-list-container").on("click", ".edit-button-point", handleEditPoint);
     $(".location-list-container").on("submit", ".update-points-form", handleUpdatePoint);
+    $("#map").on("submit", ".inmap-points-form", handleInmapPoint);
 
     //listen for click on map
-    google.maps.event.addListener(mapp,'click',
-    function(event){
-      addMarker({coords:event.latLng});
+    google.maps.event.addListener(mapp,'click', function(event){
+      addMarker(event.latLng, mapp);
     });
 
 
-    // var markers = [
-    //   {
-    //     coords:{lat: 43.6532, lng: -79.3832},
-    //     iconImage: '/img/clapper-map-icon.png',
-    //     content:`<h1> Toronto info </h1>`
-    //   },
-    //   {
-    //   coords:{lat: 43.6452, lng: -79.3806}
-    //   }
-    // ]
+    function addMarker(location, map) {
+      // Add the marker at the clicked location, and add the next-available label
+      // from the array of alphabetical characters.
+      var newMarker = new google.maps.Marker({
+        position: location,
+        map: mapp
+      });
 
-    // markers.forEach(function(marker){
-    //   addMarker(marker);
-    // })
+      google.maps.event.addListener(newMarker, 'click', (function(nmarker) {
+        return function() {
+          infowindow.setContent(`
+            <div>
+              <form class="inmap-points-form">
+                <label for="inmap-point-name">Name: </label>
+                <input class="inmap-point-name" type="text" name="name" maxlength="40" required>
 
+                <label for="inmap-point-image">Image: </label>
+                <input class="inmap-point-image" type="text" maxlength="250" name="image">
 
-    // //Add Marker Function
-    // function addMarker(properties){
-    //   var marker = new google.maps.Marker({
-    //     position: properties.coords,
-    //     map: map,
-    //   });
+                <label for="inmap-point-details">Details: </label>
+                <input class="inmap-point-details" type="text" maxlength="250" name="details">
 
-    //   if(properties.iconImage){
-    //     marker.setIcon(properties.iconImage)
-    //   }
+                <input type="hidden" value="${nmarker.position}" name="location" />
 
-    //   if(properties.content){
-    //     var infoWindow = new google.maps.InfoWindow({
-    //       content: properties.content
-    //     });
-
-    //     marker.addListener('click', function(){
-    //       infoWindow.open(map,marker);
-    //     })
-    //   }
-    // }
+                <input type="submit" class="btn btn-sm inmap-point-button" value="Post">
+              </form>
+            </div>
+          `);
+          infowindow.open(mapp, nmarker);
+        }
+      })(newMarker));
+    }
 
 
   }

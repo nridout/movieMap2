@@ -83,51 +83,7 @@
     </div>
   </div>
 
-
-
-
-
-<script>
-  $.ajax({
-    method: "GET",
-    url: `${$(location).attr("href")}/favourite`
-  })
-  .then(function (data) {
-    if (data === "true") {
-      $(".fav-button").removeClass("not-fav");
-      $(".fav-button").text("Unfavourite");
-    }
-  });
-</script>
-
- <script>
-  $( "#markerMaker" ).submit(function( event ) {
-
-    event.preventDefault();
-    var $form = $('#markerMaker');
-    var formData = $($form).serialize();
-
-    console.log("this is form: ", formData)
-
-    $.ajax({
-      type: "POST",
-      url: $(location).attr("href")+'/points',
-      data: formData,
-    })
-    .done(function(response) {
-      $('#markerName').val('');
-      $('#markerLocation').val('');
-      $('#markerImage').val('');
-      $('#markerDetails').val('');
-      location.reload();
-    })
-    .fail(function(data){
-      console.log("failure in ajax")
-    })
-
-
-  });
- </script>
+<script type="text/javascript" src="/scripts/mapApp.js"></script>
 
  <script>
 
@@ -249,7 +205,6 @@
       event.preventDefault();
 
       var query = $(e.target).serialize();
-      console.log(query);
 
       $.ajax({
         type: "POST",

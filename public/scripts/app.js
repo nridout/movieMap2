@@ -38,8 +38,7 @@ var handleUnfavourite = function (e) {
 };
 
 $(document).ready(function () {
-  $("body").on("click", ".fav-button", handleFavourite);
-  $("body").on("click", ".unfav-button", handleUnfavourite);
+
 
   // EDIT MAP BUTTON
   // Hide on load

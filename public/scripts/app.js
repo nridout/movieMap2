@@ -37,12 +37,13 @@ var handleUnfavourite = function (e) {
   });
 };
 
+
 $(document).ready(function () {
   $("body").on("click", ".fav-button", handleFavourite);
   $("body").on("click", ".unfav-button", handleUnfavourite);
 
+
   // EDIT MAP BUTTON
-  // Hide on load
   $(".update-map-container").hide();
   // Toggle Edit form
   $("#edit-map").click(function () {
@@ -51,6 +52,34 @@ $(document).ready(function () {
       $("#update-name").focus();
     } else {
       $(".update-map-container").slideUp("fast");
+    }
+  });
+
+  // NEW LOCATION
+  $(".marker-maker").hide();
+  // Toggle New Marker
+  $(".new-location").click(function () {
+    if ($(".marker-maker").is(":hidden")) {
+      $(".marker-maker").slideDown("fast");
+      $(".google-map-container").removeAttr('id');
+      $(".location-list-container").hide();
+    } else {
+      $(".marker-maker").slideUp("fast");
+      $(".google-map-container").attr("id", "fullsize")
+    }
+  });
+
+  // SHOW LOCATION LIST
+  $(".location-list-container").hide();
+  // Toggle New Marker
+  $(".location-list").click(function () {
+    if ($(".location-list-container").is(":hidden")) {
+      $(".location-list-container").slideDown("fast");
+      $(".google-map-container").removeAttr('id');
+      $(".marker-maker").hide();
+    } else {
+      $(".location-list-container").slideUp("fast");
+      $(".google-map-container").attr("id", "fullsize")
     }
   });
 

@@ -139,14 +139,13 @@ body {
   padding: 4em 2em 1em 2em;
 }
 
-.update-map-container {
+.update-map-container{
   background-color: $darkGrey;
   color: white;
   padding: 4em 2em 1em 1em;
   z-index: 4;
   position: absolute;
   width: 100%;
-  // display: none;
 }
 
 #map-edit-form {
@@ -167,16 +166,16 @@ body {
 }
 
 .map-container {
-  width: 100%;
-  height: 700px;
+  width: 100vw;
+  height: 575px;
   position: relative !important;
   overflow: hidden !important;
   margin-top: 4em;
   z-index: 3;
 }
 .map-location-container {
-  width: 320px;
-  max-width: 320px;
+  width: 25vw;
+  min-width: 200px;
   height: 100%;
   position: absolute;
   left: 0;
@@ -267,32 +266,35 @@ body {
 .location-address{
   font-weight: 600;
 }
-// .location-buttons {
-//   font-size: 12px;
-// }
 
-// .marker-maker {
-//   // display: none;
-// }
+.marker-maker {
+  overflow-y: auto;
+  height: calc(100% - 40px);
+  position: relative;
+  left: 0px;
+  transition: left 0.3s;
+  z-index: 3;
+  background: #fff;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
 
 .google-map-container {
   height: 100%;
-  width: 100%;
+  width: 75vw;
   position: absolute;
   top: 0px;
-  left: 0px;
+  right: 0px;
   background-color: rgb(229, 227, 223);
-  position: absolute;
   z-index: 0;
-  left: 0px;
-  top: 0px;
-  height: 100%;
-  width: 100%;
   padding: 0px;
   border-width: 0px;
   margin: 0px;
   cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default;
   touch-action: pan-x pan-y;
+}
+
+#fullsize {
+  width: 100vw;
 }
 
 // ------------------------- MAP INDEX PAGE ------------------------- //
@@ -445,4 +447,12 @@ a:hover {
   margin-right: auto;
   width: 95%;
   height: 95%;
+}
+
+.gmnoprint {
+  display: none;
+}
+
+.gm-fullscreen-control{
+  display: none;
 }

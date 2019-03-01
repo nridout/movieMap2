@@ -40,6 +40,20 @@ var handleUnfavourite = function (e) {
 $(document).ready(function () {
   $("body").on("click", ".fav-button", handleFavourite);
   $("body").on("click", ".unfav-button", handleUnfavourite);
+
+  // EDIT MAP BUTTON
+  // Hide on load
+  $(".update-map-container").hide();
+  // Toggle Edit form
+  $("#edit-map").click(function () {
+    if ($(".update-map-container").is(":hidden")) {
+      $(".update-map-container").slideDown("fast");
+      $("#update-name").focus();
+    } else {
+      $(".update-map-container").slideUp("fast");
+    }
+  });
+
 });
 
 
@@ -54,3 +68,6 @@ $(document).ready(function () {
 //     }
 //   });;
 // });
+
+
+

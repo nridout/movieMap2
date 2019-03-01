@@ -456,3 +456,20 @@ a:hover {
 .gm-fullscreen-control{
   display: none;
 }
+
+// ------------------------- MAP INDEX PAGE ------------------------- //
+
+#markerMaker {
+  display: flex;
+  justify-content: center;
+
+  div.form-group {
+    width: 100%;
+    padding: 0em 1em;
+
+    label, input {
+      width: 100%;
+    }
+  }
+}
+

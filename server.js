@@ -420,11 +420,15 @@ app.post("/maps/:id/points", (req, res) => {
         const mLocation = JSON.parse(data).results[0].formatted_address;
 
         // console.log("lat long: ", mLatitude, mLongitude);
+        const imageURL = (!req.body.image.length) ? "" :
+          (req.body.image.slice(0, 7) === "http://") ? req.body.image :
+          (req.body.image.slice(0, 8) === "https://") ? req.body.image :
+          `http://${req.body.image}`;
 
         const newPoint = {
           map_id: req.params.id,
           name: req.body.name,
-          image: req.body.image || "",
+          image: imageURL || "",
           details: req.body.details || "",
           location: mLocation || req.body.location,
           latitude: mLatitude || 0,

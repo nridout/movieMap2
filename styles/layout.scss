@@ -29,6 +29,7 @@ body {
 
 .container {
   padding-top: 7em;
+  height: 840px;
 }
 
 // ---------------- HOME / LOGIN / REGISTER ----------------- //
@@ -98,7 +99,7 @@ body {
   font-size: 20px;
   position: fixed;
   width: auto;
-  z-index: 1;
+  z-index: 4;
   right: 0px;
   left: 0px;
 }
@@ -125,16 +126,23 @@ body {
   text-align: center;
 }
 
+#subnav {
+  background-color: $darkGrey;
+  color: white;
+  font-size: 16px;
+}
+
 .map-header {
   background-color: $darkGrey;
   color: white;
-  padding: 5em 2em 1em 2em;
+  padding: 4em 2em 1em 2em;
 }
 
 .update-map {
   background-color: $darkGrey;
   color: white;
-  padding: 2em;
+  padding: 4em 2em 1em;
+  display: none;
 }
 
 .update-map button{
@@ -146,14 +154,13 @@ body {
 }
 
 .map-container {
-  border: 1px solid black;
   width: 100%;
   height: 700px;
   position: relative !important;
   overflow: hidden !important;
+  margin-top: 4em;
 }
 .map-location-container {
-  border: 1px solid black;
   width: 320px;
   max-width: 320px;
   height: 100%;
@@ -164,12 +171,10 @@ body {
 }
 .map-locations {
   background: $lightGrey;
-  border: 1px solid black;
   height: 100%;
 }
 .locations-header {
   background: $lightGrey;
-  border: 1px solid black;
   padding: 8px 16px;
   display: inline-flex;
   align-items: center;
@@ -177,22 +182,21 @@ body {
   position: relative;
   z-index: 2;
   box-sizing: border-box;
+  width: 100%;
 }
-.location-list {
-  border: 1px solid black;
+
+.locations-header div:hover {
+  color: $darkRed;
+}
+
+.locations-header div {
   line-height: 24px;
   font-size: 16px;
   transition: width 0.3s;
-}
-.new-location {
-  border: 1px solid black;
-  line-height: 24px;
-  font-size: 16px;
-  transition: width 0.3s;
+  padding: 0 1em 0 0;
 }
 
 .location-list-container {
-  border: 1px solid black;
   overflow-y: auto;
   height: calc(100% - 40px);
   position: relative;
@@ -203,7 +207,6 @@ body {
   box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 .location{
-  border: 1px solid black;
   position: relative;
   padding: 12px;
   background: #fff;
@@ -211,15 +214,15 @@ body {
   box-sizing: border-box;
   transition: box-shadow 0.3s, background 0.3s;
   min-height: 94px;
+  border-bottom: 1px solid $lightGrey;
 }
 .location:hover {
-  box-shadow: inset 0 0 0 2px #4285f4, 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: inset 0 0 0 2px $primaryRed, 0 2px 6px rgba(0,0,0,0.1);
   z-index: 1;
   cursor: default;
 }
 
 .location-picture{
-  border: 1px solid black;
   position: relative;
   float: right;
   width: 70px;
@@ -229,24 +232,34 @@ body {
   margin-left: 12px;
   margin-bottom: 12px;
 }
+
+.location-picture img {
+  width: 4.5em;
+  height: 100%;
+}
+
 .location-info{
-  border: 1px solid black;
-  margin: 8px 0;
+  margin: 8px 0 0 0;
   font-size: 12px;
   color: #000;
 }
 .location-name{
-  border: 1px solid black;
   font-weight: 700;
   font-size: 15px;
-  margin-top: 0;
+  margin-top: -7px;
+  margin-bottom: 5px;
+  color: $darkRed
 }
 .location-address{
-  border: 1px solid black;
+  font-weight: 600;
 }
 // .location-buttons {
-
+//   font-size: 12px;
 // }
+
+.marker-maker {
+  display: none;
+}
 
 .google-map-container {
   height: 100%;
@@ -397,4 +410,11 @@ body {
 
 a:hover {
   text-decoration: none;
+}
+
+.footer-text {
+  text-align: center;
+  font-size: 14px;
+  padding-top: 5px;
+  color: #d8d8d8;
 }

@@ -2,8 +2,31 @@
 
 <!-- Make changes to map -->
 <div class="map-header">
-  <h1><%= map.name %> Map</h1>
-</div>
+  <nav id="subnav" class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/"><h1><%= map.name %> Map</h1></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Edit</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Delete</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Like</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Unlike</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  </div>
+
 <div class="update-map">
   <div class="form-group mb-2">
     <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
@@ -29,34 +52,123 @@
     <div class="map-location-container">
       <div class="map-locations">
         <div class="locations-header">
-          <div class="location-list">
-            <h2>List</h2>
-          </div>
-          <div class="new-location">
-            <h2>New</h2>
-          </div>
+          <div class="location-list">List</div>
+          <div class="new-location">New</div>
         </div>
         <div class="location-list-container">
           <div class="location">
             <div class="location-picture">
-              <img src="/img/clapper-map-icon.png">
+              <img src="/img/cn-tower.png">
             </div>
             <div class="location-info">
-              <div class="location-name">
-                <p>Pin Name</p>
-              </div>
-              <div class="location-address">
-                <p>Pin Address</p>
-              </div>
+              <div class="location-name">Point Name</div>
+              <div class="location-address">Pin Address</div>
+              <div class="location-details">Details about this Location...</div>
               <div class="location-buttons">
-                <button class="btn edit-button" data-id="<%= map.id %>">Edit</button>
-                <button class="btn delete-button" data-id="<%= map.id %>">Delete</button>
+                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
+                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="location">
+            <div class="location-picture">
+              <img src="/img/cn-tower.png">
+            </div>
+            <div class="location-info">
+              <div class="location-name">Point Name</div>
+              <div class="location-address">Pin Address</div>
+              <div class="location-details">Details about this Location...</div>
+              <div class="location-buttons">
+                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
+                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="location">
+            <div class="location-picture">
+              <img src="/img/cn-tower.png">
+            </div>
+            <div class="location-info">
+              <div class="location-name">Point Name</div>
+              <div class="location-address">Pin Address</div>
+              <div class="location-details">Details about this Location...</div>
+              <div class="location-buttons">
+                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
+                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="location">
+            <div class="location-picture">
+              <img src="/img/cn-tower.png">
+            </div>
+            <div class="location-info">
+              <div class="location-name">Point Name</div>
+              <div class="location-address">Pin Address</div>
+              <div class="location-details">Details about this Location...</div>
+              <div class="location-buttons">
+                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
+                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="location">
+            <div class="location-picture">
+              <img src="/img/cn-tower.png">
+            </div>
+            <div class="location-info">
+              <div class="location-name">Point Name</div>
+              <div class="location-address">Pin Address</div>
+              <div class="location-details">Details about this Location...</div>
+              <div class="location-buttons">
+                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
+                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="location">
+            <div class="location-picture">
+              <img src="/img/cn-tower.png">
+            </div>
+            <div class="location-info">
+              <div class="location-name">Point Name</div>
+              <div class="location-address">Pin Address</div>
+              <div class="location-details">Details about this Location...</div>
+              <div class="location-buttons">
+                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
+                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="marker-maker">
+      <!-- MARKER MAKER -->
+      <form class="form-inline" action="/maps/<%= map.id%>/points" method="POST" id="markerMaker">
+        <div class="form-group mb-2">
+          <div class="my-2">
+            <label for="name">Name:</label>
+            <input id="markerName" class="form-control mt-0" type="text" name="name" required>
+          </div>
+          <div class="my-2">
+            <label for="location">Location:</label>
+            <input id="markerLocation" class="form-control mt-0" type="text" name="location" required>
+          </div>
+          <div class="my-2">
+            <label for="location">Image:</label>
+            <input id="markerImage" class="form-control mt-0" type="text" name="image" required>
+          </div>
+          <div class="my-2">
+            <label for="location">Details:</label>
+            <input id="markerDetails" class="form-control mt-0" type="text" name="details" required>
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+
     <div class="google-map-container">
       <div id="map"></div>
     </div>
@@ -65,32 +177,7 @@
 
 
 
-<!-- MARKER MAKER -->
 
-  <form class="form-inline" action="/maps/<%= map.id%>/points" method="POST" id="markerMaker">
-    <div class="form-group mb-2">
-      <div class="my-2">
-        <label for="name">Name:</label>
-        <input id="markerName" class="form-control mt-0" type="text" name="name" required>
-      </div>
-      <div class="my-2">
-        <label for="location">Location:</label>
-        <input id="markerLocation" class="form-control mt-0" type="text" name="location" required>
-      </div>
-       <div class="my-2">
-        <label for="location">Image:</label>
-        <input id="markerImage" class="form-control mt-0" type="text" name="image" required>
-      </div>
-      <div class="my-2">
-        <label for="location">Details:</label>
-        <input id="markerDetails" class="form-control mt-0" type="text" name="details" required>
-      </div>
-      <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-    </div>
-  </form>
-
-
-<h3 class="map-title"> Google Map Example </h3>
 
 
  <script>

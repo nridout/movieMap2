@@ -168,6 +168,7 @@
             infowindow.setContent(`
               <h3>${points[i].name}</h3>
               <p>${points[i].details}</p>
+              <img class="point-image" src=${points[i].image} alt="point image" height = "150" width = "180">
             `);
             infowindow.open(mapp, marker);
           }

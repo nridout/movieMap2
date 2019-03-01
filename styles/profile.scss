@@ -1,21 +1,22 @@
 div.profile-container {
   margin-bottom: 4em;
-  padding: 4em 0 0 0;
+  padding: 4.2em 0 0 0;
 
   h2 {
     font-size: 3em;
     text-align: center;
     font-family: 'Limelight', cursive;
-    background-image: linear-gradient(#d6d6d6, #b5b5b5);
+    background-color: #d6d6d6;
     -webkit-box-shadow: 0 5px 10px 0 rgba(0,0,0,0.3);
-    margin-bottom: 1rem;
     color: #252525;
+    margin-bottom: 0;
   }
 
   h3{
     font-size: 1.5em;
     text-align: center;
-
+    background-color: #d6d6d6;
+    padding: 0.5em;
   }
 
   .featured {

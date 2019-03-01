@@ -175,7 +175,18 @@
 
 
 
-
+<script>
+  $.ajax({
+    method: "GET",
+    url: `${$(location).attr("href")}/favourite`
+  })
+  .then(function (data) {
+    if (data === "true") {
+      $(".fav-button").removeClass("not-fav");
+      $(".fav-button").text("Unfavourite");
+    }
+  });
+</script>
 
  <script>
   $( "#markerMaker" ).submit(function( event ) {

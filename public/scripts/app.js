@@ -38,18 +38,6 @@ var handleUnfavourite = function (e) {
 };
 
 $(document).ready(function () {
-
-  $.ajax({
-    method: "GET",
-    url: `${$(location).attr("href")}/favourite`
-  })
-  .then(function (data) {
-    if (data === "true") {
-      $(".fav-button").removeClass("not-fav");
-      $(".fav-button").text("Unfavourite");
-    }
-  });
-
   $("body").on("click", ".fav-button", handleFavourite);
   $("body").on("click", ".unfav-button", handleUnfavourite);
 });

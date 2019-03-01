@@ -5,16 +5,29 @@ var handleFavourite = function (e) {
 
   var mapID = $(e.target).data().id;
 
-  $.ajax(`/maps/${mapID}/favourite`, {method: "POST"})
-  .then(function (data) {
-    // if (data === "false", "true") {do something}
-    return;
-  });
+  if ($(e.target).hasClass("not-fav")) {
+    $.ajax(`/maps/${mapID}/favourite`, {method: "POST"})
+    .then(function (data) {
+      // if (data === "false", "true") {do something}
+      $(e.target).removeClass("not-fav");
+      $(e.target).text("Unfavourite");
+      return;
+    });
+  } else {
+    $.ajax(`/maps/${mapID}/favourite`, {method: "DELETE"})
+    .then(function (data) {
+      // if (data === "false", "true") {do something}
+      $(e.target).addClass("not-fav");
+      $(e.target).text("Favourite");
+      return;
+    });
+  }
+
+
 };
 
 var handleUnfavourite = function (e) {
   e.preventDefault();
-  console.log('hey');
   var mapID = $(e.target).data().id;
 
   $.ajax(`/maps/${mapID}/favourite`, {method: "DELETE"})

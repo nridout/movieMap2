@@ -364,14 +364,30 @@ app.get("/users/:username", (req, res) => {
       .where('username', req.params.username)
       .then(function (rows_contributed) {
 
-        if (req.session.userid) {
-          knex.select('*').from('users')
-          .where('id', req.session.userid)
-          .then(function (rows_user) {
-            return res.status(200).render("profile", {isLogged: true, person: req.params.username, username: rows_user[0].username, created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+        if (rows_favourite.length) {
+          knex.select('*').from('maps')
+          .where('id', rows_favourite[0].mapid)
+          .then(function (featured) {
+            if (req.session.userid) {
+              knex.select('*').from('users')
+              .where('id', req.session.userid)
+              .then(function (rows_user) {
+                return res.status(200).render("profile", {isLogged: true, featured: featured[0], person: req.params.username, username: rows_user[0].username, created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+              });
+            } else {
+              return res.status(200).render("profile", {isLogged: false, featured: featured[0], person: req.params.username, username: "", created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+            }
           });
         } else {
-          return res.status(200).render("profile", {isLogged: false, person: req.params.username, username: "", created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+          if (req.session.userid) {
+            knex.select('*').from('users')
+            .where('id', req.session.userid)
+            .then(function (rows_user) {
+              return res.status(200).render("profile", {isLogged: true, featured: null, person: req.params.username, username: rows_user[0].username, created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+            });
+          } else {
+            return res.status(200).render("profile", {isLogged: false, featured: null, person: req.params.username, username: "", created: rows_created, favourite: rows_favourite, contributed: rows_contributed});
+          }
         }
       });
     });

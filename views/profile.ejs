@@ -3,26 +3,40 @@
 <div class="profile-container">
   <h2><%= person %>'s Maps</h2>
 
-  <h3>Created maps</h3>
-  <ul>
-    <% for (var cmap of created) { %>
-    <li><%= cmap.name %>, <%= cmap.location%> - <a href="/maps/<%= cmap.mapid %>">link</a></li>
-    <% } %>
-  </ul>
+  <div class="featured">
+    <picture>
+      <img class="screenshot" src="https://maps.googleapis.com/maps/api/staticmap?center=<%= (featured) ? featured.latitude : "0" %>,<%= (featured) ? featured.longitude : "0" %>&zoom=14&size=2000x1800&key=AIzaSyCri7Bud131ZI5QakCVxsPsV2cDZTQkU2g">
+    </picture>
+  </div>
 
-  <h3>Favourite maps</h3>
-  <ul>
-    <% for (var fmap of favourite) { %>
-    <li><%= fmap.name %>, <%= fmap.location%> - <a href="/maps/<%= fmap.mapid %>">link</a></li>
-    <% } %>
-  </ul>
+  <div class="list-of-user-maps">
+    <div class="created-maps">
+      <h3>Created maps</h3>
+      <ul>
+        <% for (var cmap of created) { %>
+        <li><%= cmap.name %>, <%= cmap.location%> - <a href="/maps/<%= cmap.mapid %>">link</a></li>
+        <% } %>
+      </ul>
+    </div>
 
-  <h3>Contributed maps</h3>
-  <ul>
-    <% for (var cnmap of contributed) { %>
-    <li><%= cnmap.name %>, <%= cnmap.location%> - <a href="/maps/<%= cnmap.mapid %>">link</a></li>
-    <% } %>
-  </ul>
+    <div class="favourite-maps">
+      <h3>Favourite maps</h3>
+      <ul>
+        <% for (var fmap of favourite) { %>
+        <li><%= fmap.name %>, <%= fmap.location%> - <a href="/maps/<%= fmap.mapid %>">link</a></li>
+        <% } %>
+      </ul>
+    </div>
+
+    <div class="contributed-maps">
+      <h3>Contributed maps</h3>
+      <ul>
+        <% for (var cnmap of contributed) { %>
+        <li><%= cnmap.name %>, <%= cnmap.location%> - <a href="/maps/<%= cnmap.mapid %>">link</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
 
 </div>
 

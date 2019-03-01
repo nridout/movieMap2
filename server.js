@@ -252,8 +252,8 @@ app.put("/maps/:id", (req, res) => {
     .then(function (rows_maps) {
       if (rows_maps[0].creator_id === req.session.userid) {
         // *** TODO: use API to set a new latitude and location if it is changed
-
-        request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
+        const location = req.body.location || rows_maps[0].location;
+        request(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
           // console.log('error:', error); // Print the error if one occurred
           // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
@@ -487,24 +487,35 @@ app.put("/maps/:id/points/:pointID", (req, res) => {
       map_id: req.params.id
     })
     .then(function (rows_point) {
+      const location = req.body.location || rows_point[0].location;
+      request(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
+        // console.log('error:', error); // Print the error if one occurred
+        // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
-      // *** TODO: use API to set a new latitude and location if it is changed
-      // const mLatitude;
-      // const mLongitude;
+        const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+        const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+        const mLocation = JSON.parse(data).results[0].formatted_address;
 
-      knex('points').where({
-        id: req.params.pointID,
-        map_id: req.params.id
-      })
-      .update({
-        name: req.body.name || rows_point.name,
-        location: req.body.location || rows_point.location,
-        latitude: mLatitude || rows_point.latitude,
-        longitude: mLongitude || rows_point.longitude,
-      })
-      .then(function () {
-        return res.status(200).json("true"); // ** Could use this value, depending on how frontend is handled
-        // might need 'return res.redirect(`/maps/${req.params.id}`);' instead
+        // *** TODO: use API to set a new latitude and location if it is changed
+        // const mLatitude;
+        // const mLongitude;
+
+        knex('points').where({
+          id: req.params.pointID,
+          map_id: req.params.id
+        })
+        .update({
+          name: req.body.name || rows_point[0].name,
+          image: req.body.image || rows_point[0].image,
+          details: req.body.details || rows_point[0].details,
+          location: mLocation || rows_point[0].location,
+          latitude: mLatitude || rows_point[0].latitude,
+          longitude: mLongitude || rows_point[0].longitude,
+        })
+        .then(function () {
+          return res.status(200).json("true"); // ** Could use this value, depending on how frontend is handled
+          // might need 'return res.redirect(`/maps/${req.params.id}`);' instead
+        });
       });
     });
 

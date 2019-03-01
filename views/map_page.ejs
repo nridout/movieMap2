@@ -1,25 +1,69 @@
 <% include ./partials/header %>
 
-<div class="container">
-  <p>Where each map appears</p>
-
-  <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
-    <div class="form-group mb-2">
-      <label for="email">Name:</label>
-      <input class="form-control ml-0" type="text" name="name" placeholder="<%= map.name %>" required>
-      <label for="email">Location:</label>
-      <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>" required>
-      <button type="submit" class="btn btn-primary">Update</button>
-    </div>
-  </form>
-
-  <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
-    <button type="submit" class="btn">Delete</button>
-  </form>
+<!-- Make changes to map -->
+<div class="map-header">
+  <h1><%= map.name %> Map</h1>
+</div>
+<div class="update-map">
+  <div class="form-group mb-2">
+    <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
+        <label for="email">Name:</label>
+        <input class="form-control ml-0" type="text" name="name" placeholder="<%= map.name %>" required>
+        <label for="email">Location:</label>
+        <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>" required>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
+      <button type="submit" class="btn">Delete</button>
+    </form>
+  </div>
 
   <button class="btn fav-button" data-id="<%= map.id %>">Favourite</button>
   <button class="btn unfav-button" data-id="<%= map.id %>">UnFavourite</button>
+
 </div>
+
+  <!-- Map Display -->
+
+  <div class="map-container">
+    <div class="map-location-container">
+      <div class="map-locations">
+        <div class="locations-header">
+          <div class="location-list">
+            <h2>List</h2>
+          </div>
+          <div class="new-location">
+            <h2>New</h2>
+          </div>
+        </div>
+        <div class="location-list-container">
+          <div class="location">
+            <div class="location-picture">
+              <img src="/img/clapper-map-icon.png">
+            </div>
+            <div class="location-info">
+              <div class="location-name">
+                <p>Pin Name</p>
+              </div>
+              <div class="location-address">
+                <p>Pin Address</p>
+              </div>
+              <div class="location-buttons">
+                <button class="btn edit-button" data-id="<%= map.id %>">Edit</button>
+                <button class="btn delete-button" data-id="<%= map.id %>">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="google-map-container">
+      <div id="map"></div>
+    </div>
+  </div>
+
+
+
 
 <!-- MARKER MAKER -->
 
@@ -48,7 +92,7 @@
 
 <h3 class="map-title"> Google Map Example </h3>
 
- <div id="map"></div>
+
  <script>
   $( "#markerMaker" ).submit(function( event ) {
 

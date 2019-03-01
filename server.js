@@ -538,8 +538,31 @@ app.delete("/maps/:id/points/:pointID", (req, res) => {
 });
 
 
-// The following two routes are for AJAX calls to favourite/unfavourite maps
+// The following three routes are for AJAX calls to favourite/unfavourite maps
 // *** Two new routes, not from TRELLO
+
+app.get("/maps/:id/favourite", (req, res) => {
+  if (req.session.userid) {
+    knex.select('*').from('favourite_maps')
+    .where({
+      user_id: req.session.userid,
+      map_id: req.params.id
+    })
+    .then(function (rows_match) {
+      if (!rows_match.length) {
+        return res.status(200).json("false");
+        // might not need this return value it is up to the frontend handling
+      } else {
+        return res.status(200).json("true");
+      }
+    });
+  } else {
+    // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
+    // users who do not have cookies
+    return res.status(200).json("false");
+    // might need 'return res.redirect("/login");' instead
+  }
+});
 
 app.post("/maps/:id/favourite", (req, res) => {
   if (req.session.userid) {
@@ -561,13 +584,13 @@ app.post("/maps/:id/favourite", (req, res) => {
           // might not need this return value it is up to the frontend handling
         });
       } else {
-        return res.status(400).json("false");
+        return res.status(200).json("false");
       }
     });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
     // users who do not have cookies
-    return res.status(401).json("false");
+    return res.status(200).json("false");
     // might need 'return res.redirect("/login");' instead
   }
 });
@@ -592,13 +615,13 @@ app.delete("/maps/:id/favourite", (req, res) => {
           // ** might not need this return value it is up to the frontend handling
         });
       } else {
-        return res.status(400).json("false");
+        return res.status(200).json("false");
       }
     });
   } else {
     // ** TODO: this can be fine as it is, ONLY IF the favourite button is not shown for
     // users who do not have cookies
-    return res.status(401).json("false");
+    return res.status(200).json("false");
     // might need 'return res.redirect("/login");' instead
   }
 });

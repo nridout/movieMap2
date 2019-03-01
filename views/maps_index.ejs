@@ -10,14 +10,14 @@
       <div class="map-boarder">
         <div class="map-shot">
           <div class="map-img">
-            <a class="map-link" href="/maps/<%= map.id %>">
+            <a class="map-link" href="/maps/<%= map.mid %>">
               <picture>
                 <img class="screenshot" src="https://maps.googleapis.com/maps/api/staticmap?center=<%= map.latitude %>,<%= map.longitude %>&zoom=14&size=200x150&key=AIzaSyCri7Bud131ZI5QakCVxsPsV2cDZTQkU2g">
               </picture>
             </a>
           </div>
           <div class="tools">
-            <a class="map-name-link" href="/maps/<%= map.id %>"><%= map.name %></a>
+            <a class="map-name-link" href="/maps/<%= map.mid %>"><%= map.name %></a>
             <div class="fav">
               <span class="toggle-fav">0</span>
             </div>
@@ -26,7 +26,7 @@
       </div>
       <h2 class="map-creator">
         <span class="creator-id">
-          <a class="user-profile-link" href="#"><%= map.creator_id %></a>
+          <a class="user-profile-link" href="#"><%= map.username %></a>
         </span>
       </h2>
     </li>

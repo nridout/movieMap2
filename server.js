@@ -143,7 +143,8 @@ app.get("/maps", (req, res) => {
     .then(function (rows_user) {
       // rows_user is obtained only to pass the username variable to the 'ejs'
       // This is done for every 'ejs' rendering that needs username variable for the loggin in user
-      knex.select('*').from('maps')
+      knex.select('maps.id AS mid', 'location', 'name', 'username', 'latitude', 'longitude').from('maps')
+      .innerJoin('users', 'users.id', 'maps.creator_id')
       .then(function (rows) {
         return res.status(200).render("maps_index", {maps: rows, isLogged: true, username: rows_user[0].username});
       });

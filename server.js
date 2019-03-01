@@ -237,7 +237,16 @@ app.get("/maps/:id", (req, res) => {
       knex.select('*').from('maps')
       .where('id', req.params.id)
       .then(function (rows) {
-        return res.status(200).render("map_page", {map: rows[0], isLogged: true, username: rows_user[0].username});
+
+        knex.select('*').from('favourite_maps')
+        .where({
+          user_id: req.session.userid,
+          map_id: req.params.id
+        })
+        .then(function (rows_fav) {
+
+          return res.status(200).render("map_page", {map: rows[0], isLogged: true, username: rows_user[0].username, fav: (rows_fav.length ? true : false)});
+        });
       });
     });
   } else {

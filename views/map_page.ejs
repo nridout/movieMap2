@@ -19,7 +19,7 @@
           </form>
         </li>
         <li class="nav-item">
-          <button class="btn fav-button not-fav" data-id="<%= map.id %>">Favourite</button>
+          <button class="btn fav-button <%= (fav) ? "" : "not-fav" %>" data-id="<%= map.id %>"><%= (fav) ? "Unfavourite" : "Favourite" %></button>
         </li>
       </ul>
     </div>

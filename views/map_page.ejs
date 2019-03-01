@@ -1,6 +1,6 @@
 <% include ./partials/header %>
 
-<!-- Make changes to map -->
+<!-- MAP NAVBAR -->
 <div class="map-header">
   <nav id="subnav" class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="/"><h1><%= map.name %> Map</h1></a>
@@ -11,10 +11,12 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Edit</a>
+          <button class="btn" id="edit-map">Edit</button>
         </li>
         <li class="nav-item">
-          <button class="btn delete-map">Delete</button>
+          <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn">Delete</button>
+          </form>
         </li>
         <li class="nav-item">
           <button class="btn fav-button not-fav" data-id="<%= map.id %>">Favourite</button>
@@ -24,27 +26,20 @@
   </nav>
   </div>
 
-<div class="update-map">
-  <div class="form-group mb-2">
+<!-- UPDATE MAP DETAILS DROP DOWN -->
+<div class="update-map-container">
+  <div class="form-group mb-2" id="map-edit-form">
     <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
         <label for="email">Name:</label>
-        <input class="form-control ml-0" type="text" name="name" placeholder="<%= map.name %>" required>
+        <input class="form-control ml-0" id="update-name" type="text" name="name" placeholder="<%= map.name %>" required>
         <label for="email">Location:</label>
         <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>" required>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
-    <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
-      <button type="submit" class="btn">Delete</button>
-    </form>
   </div>
-
-  <button class="btn fav-button" data-id="<%= map.id %>">Favourite</button>
-  <button class="btn unfav-button" data-id="<%= map.id %>">UnFavourite</button>
-
 </div>
 
-  <!-- Map Display -->
-
+<!-- MAP DISPLAY -->
   <div class="map-container">
     <div class="map-location-container">
       <div class="map-locations">
@@ -81,68 +76,12 @@
               </div>
             </div>
           </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
+   <!-- MARKER MAKER -->
     <div class="marker-maker">
-      <!-- MARKER MAKER -->
       <form class="form-inline" action="/maps/<%= map.id%>/points" method="POST" id="markerMaker">
         <div class="form-group mb-2">
           <div class="my-2">

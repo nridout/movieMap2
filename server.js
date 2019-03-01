@@ -405,12 +405,12 @@ app.post("/maps/:id/points", (req, res) => {
         console.log('error:', error);
         console.log('statusCode:', response && response.statusCode);
 
-      console.log("this is req-body: ", req.body)
+      console.log("this is req-body: ", req.body);
 
         var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
         var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
 
-        console.log("lat long: ", mLatitude, mLongitude)
+        console.log("lat long: ", mLatitude, mLongitude);
 
       const newPoint = {
         map_id: req.params.id,
@@ -433,11 +433,16 @@ app.post("/maps/:id/points", (req, res) => {
       .then(function (rows_match) {
 
         if (!rows_match.length) {
-          knex('maps').insert([newPoint])
+          knex('points').insert([newPoint])
           .then(function () {
 
             knex.select('*').from('points')
-            .where(newPoint)
+            .where({
+              map_id: req.params.id,
+              name: req.body.name,
+              latitude: newPoint.latitude,
+              longitude: newPoint.longitude
+            })
             .then(function (rows_new) {
               // rows_new[0] is the object with info about the new points created
               // also, insert current user as contributor to the map

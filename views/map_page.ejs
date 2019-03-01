@@ -53,90 +53,7 @@
           <div class="new-location">New</div>
         </div>
         <div class="location-list-container">
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="location">
-            <div class="location-picture">
-              <img src="/img/cn-tower.png">
-            </div>
-            <div class="location-info">
-              <div class="location-name">Point Name</div>
-              <div class="location-address">Pin Address</div>
-              <div class="location-details">Details about this Location...</div>
-              <div class="location-buttons">
-                <button class="btn edit-button btn-sm" data-id="#">Edit</button>
-                <button class="btn delete-button btn-sm" data-id="#">Delete</button>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -161,7 +78,7 @@
             <label for="location">Details:</label>
             <input id="markerDetails" class="form-control mt-0" type="text" name="details" required>
           </div>
-          <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+          <button type="submit" class="btn btn-lg btn-primary new-point-submit">Submit</button>
         </div>
       </form>
     </div>
@@ -207,6 +124,7 @@
       $('#markerLocation').val('');
       $('#markerImage').val('');
       $('#markerDetails').val('');
+      location.reload();
     })
     .fail(function(data){
       console.log("failure in ajax")
@@ -220,63 +138,171 @@
 
   function initMap(){
     var options = {
-    zoom: 14,
-    center: {lat:<%= map.latitude %>, lng: <%= map.longitude %>}
+      zoom: 14,
+      center: {lat:<%= map.latitude %>, lng: <%= map.longitude %>}
     }
 
-    //new map
-    var map = new google.maps.Map(document.getElementById('map'), options);
+    //new mapp
+    var mapp = new google.maps.Map(document.getElementById('map'), options);
 
-    //listen for click on map
-    google.maps.event.addListener(map,'click',
-    function(event){
-      addMarker({coords:event.latLng});
-    })
+    // var marking = new google.maps.Marker({
+    //   position: myLatLng,
+    //   map: mapp,
+    //   title: 'Hello World!'
+    // });
 
+    var infowindow = new google.maps.InfoWindow();
 
-    var markers = [
-      {
-        coords:{lat: 43.6532, lng: -79.3832},
-        iconImage: '/img/clapper-map-icon.png',
-        content:`<h1> Toronto info </h1>`
-      },
-      {
-      coords:{lat: 43.6452, lng: -79.3806}
-      }
-    ]
+    var marker;
 
-    markers.forEach(function(marker){
-      addMarker(marker);
-    })
-
-
-    //Add Marker Function
-    function addMarker(properties){
-      var marker = new google.maps.Marker({
-        position: properties.coords,
-        map: map,
-      });
-
-      if(properties.iconImage){
-        marker.setIcon(properties.iconImage)
-      }
-
-      if(properties.content){
-        var infoWindow = new google.maps.InfoWindow({
-          content: properties.content
+    $.ajax(`/maps/${<%=map.id%>}/points`)
+    .then(function (points) {
+      for (var i = 0; i < points.length; i++) {
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(points[i].latitude, points[i].longitude),
+          map: mapp
         });
 
-        marker.addListener('click', function(){
-          infoWindow.open(map,marker);
-        })
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(`
+              <h3>${points[i].name}</h3>
+              <p>${points[i].details}</p>
+            `);
+            infowindow.open(mapp, marker);
+          }
+        })(marker, i));
+
+        var pointLocation = `
+          <div class="location">
+            <div class="location-picture">
+              <img src="${points[i].image}">
+            </div>
+            <div class="location-info">
+              <div class="location-name">${points[i].name}</div>
+              <div class="location-address">${points[i].location}</div>
+              <div class="location-details">${points[i].details}</div>
+              <div class="location-buttons">
+                <button class="btn edit-button-point btn-sm" data-id="${points[i].id}">Edit</button>
+                <button class="btn delete-button-point btn-sm" data-id="${points[i].id}">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        $(".location-list-container").append(pointLocation);
       }
+    });
+
+    var handleDeletePoint = function (e) {
+      e.preventDefault();
+
+      $.ajax(`/maps/${<%=map.id%>}/points/${$(e.target).data().id}`, {method: "DELETE"})
+      .then(function (data) {
+        location.reload();
+      });
+    };
+
+    var handleUpdatePoint = function (e) {
+      e.preventDefault();
+
+      var query = $(e.target).serialize();
+
+      $.ajax(`/maps/${<%=map.id%>}/points/${$(e.target).data().id}`, {method: "PUT", data: query})
+      .then(function (data) {
+        location.reload();
+      });
+    };
+
+    var handleEditPoint = function (e) {
+      e.preventDefault();
+
+      if ($(e.target).hasClass("updating")) {
+        $(e.target).removeClass("updating");
+
+        $("update-points-form").remove();
+      } else {
+        $(e.target).addClass("updating");
+
+        $(e.target).parent().append(`
+          <form class="update-points-form" data-id="${$(e.target).data().id}">
+            <label for="update-point-name">Name: </label>
+            <input class="update-point-name" type="text" name="name">
+
+            <label for="update-point-image">Image: </label>
+            <input class="update-point-image" type="text" name="image">
+
+            <label for="update-point-details">Details: </label>
+            <input class="update-point-details" type="text" name="details">
+
+            <label for="update-point-location">Location: </label>
+            <input class="update-point-location" type="text" name="location">
+
+            <input type="submit" class="btn btn-sm update-point-button" value="Update">
+          </form>
+        `);
+      };
+
+      // $.ajax(`/maps/${<%=map.id%>}/points/${$(e.target).data().id}`, {method: "DELETE"})
+      // .then(function (data) {
+      //   location.reload();
+      // });
     }
+
+    $(".location-list-container").on("click", ".delete-button-point", handleDeletePoint);
+    $(".location-list-container").on("click", ".edit-button-point", handleEditPoint);
+    $(".location-list-container").on("submit", ".update-points-form", handleUpdatePoint);
+
+    //listen for click on map
+    google.maps.event.addListener(mapp,'click',
+    function(event){
+      addMarker({coords:event.latLng});
+    });
+
+
+    // var markers = [
+    //   {
+    //     coords:{lat: 43.6532, lng: -79.3832},
+    //     iconImage: '/img/clapper-map-icon.png',
+    //     content:`<h1> Toronto info </h1>`
+    //   },
+    //   {
+    //   coords:{lat: 43.6452, lng: -79.3806}
+    //   }
+    // ]
+
+    // markers.forEach(function(marker){
+    //   addMarker(marker);
+    // })
+
+
+    // //Add Marker Function
+    // function addMarker(properties){
+    //   var marker = new google.maps.Marker({
+    //     position: properties.coords,
+    //     map: map,
+    //   });
+
+    //   if(properties.iconImage){
+    //     marker.setIcon(properties.iconImage)
+    //   }
+
+    //   if(properties.content){
+    //     var infoWindow = new google.maps.InfoWindow({
+    //       content: properties.content
+    //     });
+
+    //     marker.addListener('click', function(){
+    //       infoWindow.open(map,marker);
+    //     })
+    //   }
+    // }
 
 
   }
 
 
- </script>
+</script>
 
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key= AIzaSyCE_jyzV5blwMAIm0FZLZoW1_b8bbLSEWU&callback=initMap"

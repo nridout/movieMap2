@@ -376,9 +376,8 @@ app.get("/users/:username", (req, res) => {
 // checked before making any access.
 app.get("/maps/:id/points", (req, res) => {
   if (req.session.userid) {
-    knex.select('points.id AS pid', 'points.name AS pname', 'image', 'details', 'points.location AS plocation', 'points.latitude AS platitude', 'points.longitude AS plongitude')
-    .from('maps').innerJoin('points', 'maps.id', 'points.map_id')
-    .where('maps.id', req.params.id)
+    knex.select('*').from('points')
+    .where('map_id', req.params.id)
     .then(function (rows_points) {
       return res.status(200).json(rows_points);
     });

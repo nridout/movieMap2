@@ -188,11 +188,12 @@ app.post("/maps", (req, res) => {
           // console.log('error:', error); // Print the error if one occurred
           // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
-          var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
-          var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+          const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+          const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+          const mLocation = JSON.parse(data).results[0].formatted_address;
 
           const newMap = {
-            location: req.body.location,
+            location: mLocation|| req.body.location,
             name: req.body.name,
             creator_id: req.session.userid,
             latitude: mLatitude || 0,
@@ -256,16 +257,17 @@ app.put("/maps/:id", (req, res) => {
           // console.log('error:', error); // Print the error if one occurred
           // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
-          var nLatitude = JSON.parse(data).results[0].geometry.location.lat;
-          var nLongitude = JSON.parse(data).results[0].geometry.location.lng;
+          const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+          const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+          const mLocation = JSON.parse(data).results[0].formatted_address;
 
           knex('maps')
           .where('id', req.params.id)
           .update({
             name: req.body.name || rows_maps[0].name,
-            location: req.body.location || rows_maps[0].location,
-            latitude: nLatitude || rows_maps[0].latitude,
-            longitude: nLongitude || rows_maps[0].longitude,
+            location: mLocation || rows_maps[0].location,
+            latitude: mLatitude || rows_maps[0].latitude,
+            longitude: mLongitude || rows_maps[0].longitude,
           })
           .then(function () {
             return res.redirect(`/maps/${req.params.id}`);
@@ -404,8 +406,9 @@ app.post("/maps/:id/points", (req, res) => {
 
         // console.log("this is req-body: ", req.body);
 
-        var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
-        var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+        const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
+        const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
+        const mLocation = JSON.parse(data).results[0].formatted_address;
 
         // console.log("lat long: ", mLatitude, mLongitude);
 
@@ -414,7 +417,7 @@ app.post("/maps/:id/points", (req, res) => {
           name: req.body.name,
           image: req.body.image || "",
           details: req.body.details || "",
-          location: req.body.location,
+          location: mLocation || req.body.location,
           latitude: mLatitude || 0,
           longitude: mLongitude || 0
         };
@@ -486,8 +489,8 @@ app.put("/maps/:id/points/:pointID", (req, res) => {
     .then(function (rows_point) {
 
       // *** TODO: use API to set a new latitude and location if it is changed
-      var nLatitude;
-      var nLongitude;
+      // const mLatitude;
+      // const mLongitude;
 
       knex('points').where({
         id: req.params.pointID,
@@ -496,8 +499,8 @@ app.put("/maps/:id/points/:pointID", (req, res) => {
       .update({
         name: req.body.name || rows_point.name,
         location: req.body.location || rows_point.location,
-        latitude: nLatitude || rows_point.latitude,
-        longitude: nLongitude || rows_point.longitude,
+        latitude: mLatitude || rows_point.latitude,
+        longitude: mLongitude || rows_point.longitude,
       })
       .then(function () {
         return res.status(200).json("true"); // ** Could use this value, depending on how frontend is handled

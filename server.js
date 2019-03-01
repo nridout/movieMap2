@@ -34,8 +34,8 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
+  src: `${__dirname}/styles`,
+  dest: `${__dirname}/public/styles`,
   debug: true,
   outputStyle: 'expanded'
 }));
@@ -183,9 +183,9 @@ app.post("/maps", (req, res) => {
         // ** TODO: check if location is valid
         //***********************************
         // AND use API to find latitude/longitude data and also store them
-        request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
-          console.log('error:', error); // Print the error if one occurred
-          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
+          // console.log('error:', error); // Print the error if one occurred
+          // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
           var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
           var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
@@ -251,29 +251,25 @@ app.put("/maps/:id", (req, res) => {
       if (rows_maps[0].creator_id === req.session.userid) {
         // *** TODO: use API to set a new latitude and location if it is changed
 
-      request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
-      console.log('error:', error); // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
+          // console.log('error:', error); // Print the error if one occurred
+          // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
-        var nLatitude = JSON.parse(data).results[0].geometry.location.lat;
-        var nLongitude = JSON.parse(data).results[0].geometry.location.lng;
+          var nLatitude = JSON.parse(data).results[0].geometry.location.lat;
+          var nLongitude = JSON.parse(data).results[0].geometry.location.lng;
 
-        knex('maps')
-        .where('id', req.params.id)
-        .update({
-          name: req.body.name || rows_maps[0].name,
-          location: req.body.location || rows_maps[0].location,
-          latitude: nLatitude || rows_maps[0].latitude,
-          longitude: nLongitude || rows_maps[0].longitude,
-        })
-        .then(function () {
-          return res.redirect(`/maps/${req.params.id}`);
+          knex('maps')
+          .where('id', req.params.id)
+          .update({
+            name: req.body.name || rows_maps[0].name,
+            location: req.body.location || rows_maps[0].location,
+            latitude: nLatitude || rows_maps[0].latitude,
+            longitude: nLongitude || rows_maps[0].longitude,
+          })
+          .then(function () {
+            return res.redirect(`/maps/${req.params.id}`);
+          });
         });
-
-      });
-
-
-
       } else {
         // ** TODO: this can be fine as it is, ONLY IF the editing button is not shown for
         // users who are not the creator of the map, in the frontend side
@@ -401,73 +397,70 @@ app.post("/maps/:id/points", (req, res) => {
       //***********************************
       // AND use API to find latitude/longitude data and also store them
 
-      request('https://maps.googleapis.com/maps/api/geocode/json?address='+req.body.location+'&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc', function (error, response, data) {
-        console.log('error:', error);
-        console.log('statusCode:', response && response.statusCode);
+      request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
+        // console.log('error:', error);
+        // console.log('statusCode:', response && response.statusCode);
 
-      console.log("this is req-body: ", req.body);
+        // console.log("this is req-body: ", req.body);
 
         var mLatitude = JSON.parse(data).results[0].geometry.location.lat;
         var mLongitude = JSON.parse(data).results[0].geometry.location.lng;
 
-        console.log("lat long: ", mLatitude, mLongitude);
+        // console.log("lat long: ", mLatitude, mLongitude);
 
-      const newPoint = {
-        map_id: req.params.id,
-        name: req.body.name,
-        image: req.body.image || "",
-        details: req.body.details || "",
-        location: req.body.location,
-        latitude: mLatitude || 0,
-        longitude: mLongitude || 0
-      };
+        const newPoint = {
+          map_id: req.params.id,
+          name: req.body.name,
+          image: req.body.image || "",
+          details: req.body.details || "",
+          location: req.body.location,
+          latitude: mLatitude || 0,
+          longitude: mLongitude || 0
+        };
 
-      // Check if same name, same latitude and longitude point exists
-      knex.select('*').from('points')
-      .where({
-        map_id: req.params.id,
-        name: req.body.name,
-        latitude: newPoint.latitude,
-        longitude: newPoint.longitude
-      })
-      .then(function (rows_match) {
+        // Check if same name, same latitude and longitude point exists
+        knex.select('*').from('points')
+        .where({
+          map_id: req.params.id,
+          name: req.body.name,
+          latitude: newPoint.latitude,
+          longitude: newPoint.longitude
+        })
+        .then(function (rows_match) {
 
-        if (!rows_match.length) {
-          knex('points').insert([newPoint])
-          .then(function () {
+          if (!rows_match.length) {
+            knex('points').insert([newPoint])
+            .then(function () {
 
-            knex.select('*').from('points')
-            .where({
-              map_id: req.params.id,
-              name: req.body.name,
-              latitude: newPoint.latitude,
-              longitude: newPoint.longitude
-            })
-            .then(function (rows_new) {
-              // rows_new[0] is the object with info about the new points created
-              // also, insert current user as contributor to the map
-              const contributed = {
-                user_id: req.session.userid,
+              knex.select('*').from('points')
+              .where({
                 map_id: req.params.id,
-                point_id: rows_new[0].id
-              };
+                name: req.body.name,
+                latitude: newPoint.latitude,
+                longitude: newPoint.longitude
+              })
+              .then(function (rows_new) {
+                // rows_new[0] is the object with info about the new points created
+                // also, insert current user as contributor to the map
+                const contributed = {
+                  user_id: req.session.userid,
+                  map_id: req.params.id,
+                  point_id: rows_new[0].id
+                };
 
-              knex('contributors').insert([contributed])
-              .then(function () {
-                return res.status(200).json(rows_new[0]);
+                knex('contributors').insert([contributed])
+                .then(function () {
+                  return res.status(200).json(rows_new[0]);
+                });
               });
             });
-          });
-        } else {
-          // ** TODO: has to modify this error handling
-          // Ex. make the AJAX receive 'fail' and handle error respectively
-          res.status(400).json("fail");
-        }
+          } else {
+            // ** TODO: has to modify this error handling
+            // Ex. make the AJAX receive 'fail' and handle error respectively
+            res.status(400).json("fail");
+          }
+        });
       });
-
-});
-
-
     } else {
       // *** TODO: handle this error so that name/location input is required in HTML/EJS
       return res.status(400).send("error: need name/location for the points");
@@ -610,5 +603,5 @@ app.delete("/maps/:id/favourite", (req, res) => {
 app.use("/api/users", usersRoutes(knex));
 
 app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
+  console.log(`Example app listening on port ${PORT}`);
 });

@@ -3,7 +3,7 @@
 <div class="profile-container">
   <h2><%= person %>'s Featured Map </h2>
   <div class = "feature-title">
-    <h3><%=featured.name%></h3>
+    <h3><%= (featured) ? featured.name : "No featured map currently"%></h3>
   </div>
   <div class="featured">
     <a href="/maps/<%= (featured) ? featured.id : "" %>">

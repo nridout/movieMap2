@@ -1,89 +1,166 @@
+//variables
+$primaryRed: #F2796A;
+$darkRed: #3d0300;
+$lightGrey: #a3a3a3;
+$darkGrey: #424242;
+
 div.profile-container {
   margin-bottom: 4em;
   padding: 4.2em 0 0 0;
+  color: #252525;
+  background-size: cover;
+  background-image: url("/img/photographer-bw-faded.jpg");
+  background-repeat: no-repeat;
 
-  h2 {
-    font-size: 3em;
+
+  .user-feature-map-title {
+    font-size: 3rem;
     text-align: center;
-    font-family: 'Limelight', cursive;
-    background-color: #d6d6d6;
-    color: #252525;
-    margin-bottom: 0;
+    margin: 1rem 0 0 0;
+    color: white;
+    font-family: 'Raleway', sans-serif;
 
   }
 
-  h3{
-    font-size: 1.8em;
+  .feature-title {
+    font-size: 1.8rem;
     text-align: center;
-    background-color: #d6d6d6;
-    padding: 0 0 0.2em 0;
-    font-family: 'Oswald', sans-serif;
-    -webkit-box-shadow: 0 5px 10px 0 rgba(0,0,0,0.3);
+    padding: 0.2rem 0;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+
   }
 
   .featured {
-    margin: 1em 0em;
+    margin: 1rem;
     display: flex;
     justify-content: center;
   }
 
   img.screenshot {
-    width: 60vw;
-    height: 35vw;
-    -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.3)
+    width: 42vw;
+    height: 38vw;
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.3);
+  }
+
+  img.screenshot:hover{
+    -webkit-box-shadow: 0px 0px 2px 2px $primaryRed;
   }
 
   .list-of-user-maps {
     display: flex;
 
-
-
     h3 {
       text-align: center;
-      border: 2px solid #F2796A;
       background-color: #ec9c92;
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.5em;
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.5rem;
+      padding: 0.5rem;
+      color: white;
     }
 
     .created-maps {
       flex-grow: 1;
       flex-basis: 0;
-      background-color: #d6d6d6;
-      border-radius: 0 0 0 25px;
-      border: 1px solid #F2796A;
-      -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.3)
+      background-color: white;
+      border: 3px solid $primaryRed;
+      margin: 1rem 0.5rem;
+      border-radius: 25px;
+      overflow: auto;
     }
 
     .favourite-maps {
       flex-grow: 1;
       flex-basis: 0;
-      background-color: #d6d6d6;
-      border: 1px solid #F2796A;
-      -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.3)
+      background-color: white;
+      border: 3px solid $primaryRed;
+      margin: 1rem 0.5rem;
+      border-radius: 25px;
+      overflow: auto;
     }
 
     .contributed-maps {
       flex-grow: 1;
       flex-basis: 0;
-      background-color: #d6d6d6;
-      border-radius: 0 0 25px 0;
-      border: 1px solid #F2796A;
-      -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.3)
+      background-color: white;
+      border: 3px solid $primaryRed;
+      margin: 1rem 0.5rem;
+      border-radius: 25px;
+      overflow: auto;
+    }
 
+    .list-icon {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 6rem;
+      height: 6rem;
+      border: 3px solid $primaryRed;
+      border-radius: 50%;
+      padding: 1rem;
+      background-color: #ec9c92;;
+    }
+
+    .profile-map-link {
+      color: $primaryRed;
+    }
+
+    .profile-map-link:hover {
+       color: $darkRed;
     }
 
     ul {
       list-style-type: none;
-      padding: 1em;
+      padding: 0.5rem;
+      text-align: center;
     }
 
     li {
-      padding: 0.5em 0.2em;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border: 2px solid $primaryRed;
+      border-radius: 15px;
     }
 
-    li:hover{
-      background-color: #e6e6e6;
+    .list-seperator{
+      width: 75%;
+      border-color: $primaryRed;
+    }
+  }
+
+  @media(max-width: 560px){
+
+    .list-of-user-maps {
+      display: flex;
+      flex-direction: column;
+
+        .created-maps {
+          flex-basis: auto;
+          margin: 1rem 4rem;
+        }
+
+        .favourite-maps {
+          flex-basis: auto;
+          margin: 1rem 4rem;
+        }
+
+        .contributed-maps {
+          flex-basis: auto;
+          margin: 1rem 4rem;
+        }
+
+        .list-icon {
+          width: 5rem;
+          height: 5rem;
+        }
+
+        .profile-map-link {
+          color: $primaryRed;
+        }
+
+        .profile-map-link:hover {
+           color: $darkRed;
+        }
     }
   }
 }

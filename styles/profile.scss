@@ -47,7 +47,6 @@ div.profile-container {
     -webkit-box-shadow: 0px 0px 2px 2px $primaryRed;
   }
 
-
   .list-of-user-maps {
     display: flex;
 
@@ -126,6 +125,42 @@ div.profile-container {
     .list-seperator{
       width: 75%;
       border-color: $primaryRed;
+    }
+  }
+
+  @media(max-width: 560px){
+
+    .list-of-user-maps {
+      display: flex;
+      flex-direction: column;
+
+        .created-maps {
+          flex-basis: auto;
+          margin: 1rem 4rem;
+        }
+
+        .favourite-maps {
+          flex-basis: auto;
+          margin: 1rem 4rem;
+        }
+
+        .contributed-maps {
+          flex-basis: auto;
+          margin: 1rem 4rem;
+        }
+
+        .list-icon {
+          width: 5rem;
+          height: 5rem;
+        }
+
+        .profile-map-link {
+          color: $primaryRed;
+        }
+
+        .profile-map-link:hover {
+           color: $darkRed;
+        }
     }
   }
 }

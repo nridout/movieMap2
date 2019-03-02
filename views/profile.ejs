@@ -1,7 +1,7 @@
 <% include ./partials/header %>
 
 <div class="profile-container">
-  <h2 class ="user-feature-map"><%= person %>'s Featured Map </h2>
+  <h2 class ="user-feature-map-title"><%= person %>'s Featured Map </h2>
   <div class = "feature-title">
     <h3><%= (featured) ? featured.name : "No featured map currently"%></h3>
   </div>
@@ -16,27 +16,32 @@
   <div class="list-of-user-maps">
     <div class="created-maps">
       <h3>Created maps</h3>
+            <img class="list-icon" src="/img/explorer-icon.png">
+
       <ul>
         <% for (var cmap of created) { %>
-        <li><%= cmap.name %>, <%= cmap.location%> - <a href="/maps/<%= cmap.mapid %>">link</a></li>
+        <li> <a class= "profile-map-link" href="/maps/<%= cmap.mapid %>"><%= cmap.name %>, <%= cmap.location%> </a></li>
         <% } %>
       </ul>
     </div>
 
     <div class="favourite-maps">
       <h3>Favourite maps</h3>
+            <img class="list-icon" src="/img/fan-icon.png">
+
       <ul>
         <% for (var fmap of favourite) { %>
-        <li><%= fmap.name %>, <%= fmap.location%> - <a href="/maps/<%= fmap.mapid %>">link</a></li>
+        <li> <a class = "profile-map-link" href="/maps/<%= fmap.mapid %>"><%= fmap.name %>, <%= fmap.location%></a></li>
         <% } %>
       </ul>
     </div>
 
     <div class="contributed-maps">
       <h3>Contributed maps</h3>
+      <img class="list-icon" src="/img/contributor-icon.png">
       <ul>
         <% for (var cnmap of contributed) { %>
-        <li><%= cnmap.name %>, <%= cnmap.location%> - <a href="/maps/<%= cnmap.mapid %>">link</a></li>
+        <li> <a class = "profile-map-link" href="/maps/<%= cnmap.mapid %>"><%= cnmap.name %>, <%= cnmap.location%></a></li>
         <% } %>
       </ul>
     </div>

@@ -130,6 +130,14 @@ div.profile-container {
 
   @media(max-width: 560px){
 
+    .user-feature-map-title {
+      font-size: 2rem;
+    }
+
+    .feature-title {
+      font-size: 1.4rem;
+    }
+
     .list-of-user-maps {
       display: flex;
       flex-direction: column;
@@ -161,6 +169,19 @@ div.profile-container {
         .profile-map-link:hover {
            color: $darkRed;
         }
+
+        ul {
+          padding: 0.2rem;
+          text-align: center;
+        }
+
+        li {
+          padding: 0.3rem;
+          margin: 0.5rem 0;
+          border: 2px solid $primaryRed;
+          border-radius: 15px;
+        }
+
     }
   }
 }

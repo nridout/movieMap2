@@ -1,22 +1,28 @@
 <% include ./partials/header %>
 
-<div class="container">
-<section>
-  <h3 class="mb-4">New Map</h3>
+<header class="masthead">
+  <div class="container h-100 d-flex justify-content-center">
+    <div class="jumbotron my-auto">
+      <section>
 
-  <form action="/maps" method="POST">
-    <div class="form-group mb-2">
-      <div class="my-2">
-        <label for="name">Name:</label>
-        <input class="form-control mt-0" type="text" name="name" required>
-      </div>
-      <div class="my-2">
-        <label for="location">Location:</label>
-        <input class="form-control mt-0" type="text" name="location" required>
-      </div>
-      <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+        <h3 class="mb-4">New Map</h3>
+        <form action="/maps" method="POST">
+          <div class="form-group mb-2">
+            <div class="my-2">
+              <label for="name">Name:</label>
+              <input class="form-control mt-0" type="text" name="name" required>
+            </div>
+            <div class="my-2">
+              <label for="location">Location:</label>
+              <input class="form-control mt-0" type="text" name="location" required>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+          </div>
+        </form>
+
+      </section>
     </div>
-  </form>
-</section>
-</div>
+  </div>
+</header>
+
 <% include ./partials/footer %>

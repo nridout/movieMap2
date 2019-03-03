@@ -20,7 +20,7 @@
 
       <ul>
         <% for (var cmap of created) { %>
-        <li> <a class= "profile-map-link" href="/maps/<%= cmap.mapid %>"><%= cmap.name %>, <%= cmap.location%> </a></li>
+        <li> <a class= "profile-map-link" href="/maps/<%= cmap.mapid %>"><span class="profile-map-name"><%= cmap.name %> - </span> <%= cmap.location%> </a></li>
         <% } %>
       </ul>
     </div>
@@ -31,7 +31,7 @@
 
       <ul>
         <% for (var fmap of favourite) { %>
-        <li> <a class = "profile-map-link" href="/maps/<%= fmap.mapid %>"><%= fmap.name %>, <%= fmap.location%></a></li>
+        <li> <a class = "profile-map-link" href="/maps/<%= fmap.mapid %>"><span class="profile-map-name"><%= fmap.name %> - </span> <%= fmap.location%></a></li>
         <% } %>
       </ul>
     </div>
@@ -41,7 +41,7 @@
       <img class="list-icon" src="/img/contributor-icon.png">
       <ul>
         <% for (var cnmap of contributed) { %>
-        <li> <a class = "profile-map-link" href="/maps/<%= cnmap.mapid %>"><%= cnmap.name %>, <%= cnmap.location%></a></li>
+        <li> <a class = "profile-map-link" href="/maps/<%= cnmap.mapid %>"><span class="profile-map-name"><%= cnmap.name %> - </span> <%= cnmap.location%></a></li>
         <% } %>
       </ul>
     </div>

@@ -22,7 +22,7 @@ exports.seed = function(knex, Promise) {
         knex('maps').insert({
           id: 3,
           location: 'Toronto',
-          name: 'Harold & Kumar Go to White Castle',
+          name: 'Harold & Kumar',
           creator_id: 73,
           latitude: 43.6529,
           longitude: -79.3849

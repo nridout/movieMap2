@@ -102,7 +102,7 @@ exports.seed = function (knex, Promise) {
           latitude: 43.62831,
           longitude: -79.532433,
           location: 'Baker\'s Dozen on Kipling'
- }),
+        }),
         knex('points').insert({
           id: 11,
           map_id: 8,

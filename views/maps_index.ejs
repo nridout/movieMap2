@@ -19,7 +19,13 @@
           <div class="tools">
             <a class="map-name-link" href="/maps/<%= map.mid %>"><%= map.name %></a>
             <div class="fav">
-              <span class="toggle-fav">0</span>
+              <span class="toggle-fav">
+                <% for (var fav of favs) { %>
+                  <% if (fav.mid === map.mid) { %>
+                  <%= fav.count %>
+                  <% } %>
+                <% } %>
+              </span>
             </div>
           </div>
         </div>

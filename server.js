@@ -146,7 +146,12 @@ app.get("/maps", (req, res) => {
       knex.select('maps.id AS mid', 'location', 'name', 'username', 'latitude', 'longitude').from('maps')
       .innerJoin('users', 'users.id', 'maps.creator_id')
       .then(function (rows) {
-        return res.status(200).render("maps_index", {maps: rows, isLogged: true, username: rows_user[0].username});
+
+        knex.select('maps.id AS mid').count('maps.id AS count').from('maps')
+        .innerJoin('favourite_maps', 'maps.id', 'favourite_maps.map_id').groupBy('maps.id')
+        .then(function (rows_fav) {
+          return res.status(200).render("maps_index", {maps: rows, favs: rows_fav, isLogged: true, username: rows_user[0].username});
+        });
       });
     });
   } else {

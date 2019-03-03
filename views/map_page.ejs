@@ -128,7 +128,7 @@
         })(marker, i));
 
         var pointLocation = `
-          <div class="location">
+          <div class="location" data-id="${points[i].id}">
             <div class="location-picture">
               <img src="${points[i].image}">
             </div>
@@ -145,6 +145,14 @@
         `;
 
         $(".location-list-container").append(pointLocation);
+
+        //THIS IS SUPPOSED TO MAKE THE LOCATIONS CLICK THE MARKERS
+        // $('.location').on('click', function() {
+        //   var location_id = $(this).data().id;
+        //   console.log('click', location_id);
+        //   google.maps.event.trigger(marker, 'click');
+        // })
+
       }
     });
 

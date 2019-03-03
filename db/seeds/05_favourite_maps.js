@@ -1,6 +1,8 @@
 exports.seed = function (knex, Promise) {
   return knex('favourite_maps').del()
     .then(function () {
+      return knex.raw('ALTER SEQUENCE favourite_maps_id_seq RESTART WITH 101')
+    .then(function () {
       return Promise.all([
         knex('favourite_maps').insert({
           id: 1,
@@ -148,5 +150,6 @@ exports.seed = function (knex, Promise) {
           map_id: 1
         })
       ]);
+    });
     });
 };

@@ -1,6 +1,8 @@
 exports.seed = function (knex, Promise) {
   return knex('points').del()
     .then(function () {
+      return knex.raw('ALTER SEQUENCE points_id_seq RESTART WITH 101')
+    .then(function () {
       return Promise.all([
         // Inserts seed entries
         knex('points').insert({
@@ -235,5 +237,5 @@ exports.seed = function (knex, Promise) {
         })
       ]);
     });
+    });
 };
-

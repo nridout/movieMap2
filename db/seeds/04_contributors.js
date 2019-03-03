@@ -1,6 +1,8 @@
 exports.seed = function (knex, Promise) {
   return knex('contributors').del()
     .then(function () {
+      return knex.raw('ALTER SEQUENCE contributors_id_seq RESTART WITH 101')
+    .then(function () {
       return Promise.all([
         // Inserts seed entries
         knex('contributors').insert({
@@ -141,6 +143,7 @@ exports.seed = function (knex, Promise) {
           map_id: 8,
           point_id: 23
         })
-    ]);
-  });
+      ]);
+    });
+    });
 };

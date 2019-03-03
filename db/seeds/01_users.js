@@ -1,6 +1,8 @@
 exports.seed = function (knex, Promise) {
   return knex('users').del()
     .then(function () {
+      return knex.raw('ALTER SEQUENCE users_id_seq RESTART WITH 101')
+    .then(function () {
       return Promise.all([
         knex('users').insert({ id: 1, username: 'lcreffield0', email: 'fpasby0@wikispaces.com', password: '50750547c349f229723d59b90018dd12160ac7da' }),
         knex('users').insert({ id: 2, username: 'torrice1', email: 'sohaire1@squarespace.com', password: '50750547c349f229723d59b90018dd12160ac7da' }),
@@ -103,5 +105,6 @@ exports.seed = function (knex, Promise) {
         knex('users').insert({ id: 99, username: 'hfrarey2q', email: 'hlayne2q@1und1.de', password: '50750547c349f229723d59b90018dd12160ac7da' }),
         knex('users').insert({ id: 100, username: 'rmetts2r', email: 'gbroadis2r@cargocollective.com', password: '50750547c349f229723d59b90018dd12160ac7da' })
       ]);
+    });
     });
 };

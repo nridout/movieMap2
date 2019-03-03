@@ -1,6 +1,8 @@
 exports.seed = function(knex, Promise) {
   return knex('maps').del()
     .then(function () {
+      return knex.raw('ALTER SEQUENCE maps_id_seq RESTART WITH 101')
+    .then(function () {
       return Promise.all([
         // Inserts seed entries
         knex('maps').insert({
@@ -84,5 +86,6 @@ exports.seed = function(knex, Promise) {
           longitude: -115.1492
         })
       ]);
+    });
     });
 };

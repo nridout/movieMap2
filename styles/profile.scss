@@ -5,42 +5,80 @@ $lightGrey: #a3a3a3;
 $darkGrey: #424242;
 
 div.profile-container {
-  margin-bottom: 4em;
-  padding: 4.2em 0 0 0;
-  color: #252525;
-  background-size: cover;
-  background-image: url("/img/photographer-bw-faded.jpg");
-  background-repeat: no-repeat;
-
+    padding: 2em 0 0 0;
+    color: #252525;
+    background-size: cover;
+    background-image: url(/img/photographer-bw-faded.jpg);
+    background-repeat: no-repeat;
+    margin-top: -60px;
+    z-index: -1;
 
   .user-feature-map-title {
     font-size: 3rem;
-    text-align: center;
-    margin: 1rem 0 0 0;
+    text-align: right;
+    margin: 1rem 2rem 0 0;
     color: white;
     font-family: 'Raleway', sans-serif;
+
+       @media screen and (max-width: 1200px) {
+        text-align: center;
+        margin: 0;
+      }
+
+    h2 {
+
+      @media screen and (max-width: 1200px) {
+        font-size: 2.5rem;
+      }
+
+    }
 
   }
 
   .feature-title {
     font-size: 1.8rem;
-    text-align: center;
+    text-align: right;
     padding: 0.2rem 0;
     color: white;
+    margin: 0rem 2rem 0 0;
     font-family: 'Raleway', sans-serif;
 
+    @media screen and (max-width: 1200px) {
+      margin:0;
+      font-size: .5rem;
+    }
+
+    h3 {
+    @media screen and (max-width: 1200px) {
+      font-size: 1.5rem;
+      text-align: center;
+      }
+    }
   }
 
   .featured {
-    margin: 1rem;
+    margin: 1rem 2rem 1rem 1rem;
     display: flex;
-    justify-content: center;
+    float: right;
+      @media screen and (max-width: 1200px) {
+        justify-content: center;
+        display: flex;
+        margin:0;
+        float: none;
+      }
   }
 
   img.screenshot {
-    width: 42vw;
-    height: 38vw;
+    width: 60vw;
+    height: 65vh;
+    object-fit: cover;
     -webkit-box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.3);
+
+    @media screen and (max-width: 1200px) {
+      width: 90vw;
+      height: 65vh;
+      object-fit: cover;
+    }
   }
 
   img.screenshot:hover{
@@ -49,6 +87,7 @@ div.profile-container {
 
   .list-of-user-maps {
     display: flex;
+    margin: 1rem;
 
     h3 {
       text-align: center;
@@ -63,9 +102,8 @@ div.profile-container {
       flex-grow: 1;
       flex-basis: 0;
       background-color: white;
-      border: 3px solid $primaryRed;
       margin: 1rem 0.5rem;
-      border-radius: 25px;
+      border-radius: 10px;
       overflow: auto;
     }
 
@@ -73,9 +111,8 @@ div.profile-container {
       flex-grow: 1;
       flex-basis: 0;
       background-color: white;
-      border: 3px solid $primaryRed;
       margin: 1rem 0.5rem;
-      border-radius: 25px;
+      border-radius: 10px;
       overflow: auto;
     }
 
@@ -83,9 +120,8 @@ div.profile-container {
       flex-grow: 1;
       flex-basis: 0;
       background-color: white;
-      border: 3px solid $primaryRed;
       margin: 1rem 0.5rem;
-      border-radius: 25px;
+      border-radius: 10px;
       overflow: auto;
     }
 
@@ -135,7 +171,7 @@ div.profile-container {
   @media(max-width: 560px){
 
     .user-feature-map-title {
-      font-size: 2rem;
+      font-size: 2.5rem;
     }
 
     .feature-title {
@@ -148,17 +184,14 @@ div.profile-container {
 
         .created-maps {
           flex-basis: auto;
-          margin: 1rem 4rem;
         }
 
         .favourite-maps {
           flex-basis: auto;
-          margin: 1rem 4rem;
         }
 
         .contributed-maps {
           flex-basis: auto;
-          margin: 1rem 4rem;
         }
 
         .list-icon {

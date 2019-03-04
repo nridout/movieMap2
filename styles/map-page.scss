@@ -124,7 +124,7 @@ $darkGrey: #424242;
 
       .locations-header {
         background: $lightGrey;
-        padding: 8px 16px;
+        padding: 12px 16px 7px;
         display: inline-flex;
         align-items: center;
         cursor: pointer;
@@ -132,6 +132,7 @@ $darkGrey: #424242;
         z-index: 2;
         box-sizing: border-box;
         width: 100%;
+        box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 
         div:hover {
           color: $darkRed;
@@ -154,7 +155,7 @@ $darkGrey: #424242;
         position: relative;
         left: 0px;
         transition: left 0.3s;
-        z-index: 1;
+        z-index: 2;
         background: #fff;
         box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 
@@ -316,6 +317,19 @@ $darkGrey: #424242;
     .gm-style-iw, .gm-style-iw-c {
       border: 1px solid $lightGrey;
       max-width: 250px;
+
+      .inmap-points-form {
+        max-width: 140px;
+
+        .inmap-point-name, .inmap-point-image, .inmap-point-detail {
+          margin-bottom: .5em;
+        }
+
+        .inmap-point-button {
+          margin-top: .5em;
+        }
+
+      }
 
       .gm-style-iw-d {
         max-width: 250px;

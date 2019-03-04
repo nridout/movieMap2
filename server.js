@@ -109,7 +109,6 @@ app.post("/register", (req, res) => {
   .where('username', req.body.username)
   .orWhere('email', req.body.email)
   .then(function (rows) {
-    // 'rows' = 'SELECT * FROM users WHERE username = req.body.username OR email = req.body.email;'
     if (!rows.length) {
       const newUser = {
         username: req.body.username,
@@ -190,8 +189,6 @@ app.post("/maps", (req, res) => {
         //***********************************
         // AND use API to find latitude/longitude data and also store them
         request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
-          // console.log('error:', error); // Print the error if one occurred
-          // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
           const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
           const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
@@ -268,8 +265,6 @@ app.put("/maps/:id", (req, res) => {
         // *** TODO: use API to set a new latitude and location if it is changed
         const location = req.body.location || rows_maps[0].location;
         request(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
-          // console.log('error:', error); // Print the error if one occurred
-          // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
           const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
           const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
@@ -432,16 +427,11 @@ app.post("/maps/:id/points", (req, res) => {
       const lon = parseFloat(req.body.latlng.split("(")[1].split(")")[0].split(",")[1] , 10);
 
       request(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
-        // console.log('error:', error);
-        // console.log('statusCode:', response && response.statusCode);
-
-        // console.log("this is req-body: ", req.body);
 
         const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
         const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
         const mLocation = JSON.parse(data).results[0].formatted_address;
 
-        // console.log("lat long: ", mLatitude, mLongitude);
         const imageURL = (!req.body.image.length) ? "" :
           (req.body.image.slice(0, 7) === "http://") ? req.body.image :
           (req.body.image.slice(0, 8) === "https://") ? req.body.image :
@@ -508,16 +498,10 @@ app.post("/maps/:id/points", (req, res) => {
 
 
       request(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
-        // console.log('error:', error);
-        // console.log('statusCode:', response && response.statusCode);
-
-        // console.log("this is req-body: ", req.body);
 
         const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
         const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
         const mLocation = JSON.parse(data).results[0].formatted_address;
-
-        // console.log("lat long: ", mLatitude, mLongitude);
 
         const newPoint = {
           map_id: req.params.id,
@@ -596,16 +580,12 @@ app.put("/maps/:id/points/:pointID", (req, res) => {
     .then(function (rows_point) {
       const location = req.body.location || rows_point[0].location;
       request(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=AIzaSyCo10UbMT49dBHndBvRsC8Xsy_n_TMsNVc`, function (error, response, data) {
-        // console.log('error:', error); // Print the error if one occurred
-        // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
 
         const mLatitude = JSON.parse(data).results[0].geometry.location.lat;
         const mLongitude = JSON.parse(data).results[0].geometry.location.lng;
         const mLocation = JSON.parse(data).results[0].formatted_address;
 
         // *** TODO: use API to set a new latitude and location if it is changed
-        // const mLatitude;
-        // const mLongitude;
 
         knex('points').where({
           id: req.params.pointID,

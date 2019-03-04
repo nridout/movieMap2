@@ -2,9 +2,9 @@
 
 <!-- MAP NAVBAR -->
 <div class="map-header">
-  <nav id="subnav" class="navbar navbar-expand-lg navbar-dark">
+  <nav id="subnav" class="navbar navbar-expand-lg navbar-dark fixed-top-2">
     <a class="navbar-brand" href="/"><h1><%= map.name %> Map</h1></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#subnavbarResponsive"
       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,7 +14,7 @@
           <button class="btn" id="edit-map">Edit</button>
         </li>
         <li class="nav-item">
-          <form class="mx-2" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
+          <form class="button" action="/maps/<%= map.id %>?_method=DELETE" method="POST">
             <button type="submit" class="btn">Delete</button>
           </form>
         </li>
@@ -45,6 +45,7 @@
       <div class="map-locations">
         <div class="locations-header">
           <div class="location-list">List</div>
+          <div></div>
           <div class="new-location">New</div>
         </div>
         <div class="location-list-container">

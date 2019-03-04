@@ -13,9 +13,15 @@ $darkGrey: #424242;
   text-align: center;
 
   @media screen and (max-width: 1200px) {
-    font-size: 2em;
+  margin-bottom: 2em;
   }
 
+  h2 {
+
+    @media screen and (max-width: 1200px) {
+      font-size: 1.5em;
+    }
+  }
 }
 
 a:hover {

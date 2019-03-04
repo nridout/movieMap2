@@ -5,224 +5,287 @@ $darkRed: #3d0300;
 $lightGrey: #a3a3a3;
 $darkGrey: #424242;
 
-// ------------------------- MAP STYLING ------------------------- //
-
-#subnav {
-  background-color: $darkGrey;
-  color: white;
-  font-size: 16px;
-  z-index: 5;
-}
+// Header & Subnav
 
 .map-header {
   background-color: $darkGrey;
   color: white;
-  padding: 4em 2em 1em 2em;
+  margin-top: 8em;
+
+  @media screen and (max-width: 1200px) {
+    margin-top: 7.5em;
+  }
+
+  #subnav {
+    background-color: $darkGrey;
+    color: white;
+    font-size: 16px;
+    z-index: 5;
+    top: 0;
+    margin-top: 4em;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .nav-item {
+      margin: 0;
+    }
+
+    .navbar-brand h1 {
+      font-size: 2rem;
+      margin-bottom: 0;
+      padding: .25em;
+
+      @media screen and (max-width: 1200px) {
+        font-size: 1.5em;
+      }
+
+    }
+
+  }
+
 }
 
+// Update Map Dropdown
+
 .update-map-container{
-  background-color: $darkGrey;
+  background-color: #424242;
   color: white;
-  padding: 4em 2em 1em 1em;
+  padding: 0em 0em .5em 0em;
   z-index: 4;
   position: absolute;
   width: 100%;
+
+  @media screen and (max-width: 1090px) {
+    margin-top: 7em;
+  }
+
+  #map-edit-form {
+    margin-top: 0.5em;
+
+    @media screen and (max-width: 1090px) {
+      padding: 1em;
+    }
+
+
+    label {
+      margin: 0 1em 0 1em;
+
+      @media screen and (max-width: 1090px) {
+        padding-bottom: 0.5em;
+        padding-top: 0.5em;
+        margin: 0;
+      }
+
+    }
+
+    button:hover {
+      background-color: $darkRed;
+    }
+
+    button{
+      background-color: $lightGrey;
+      margin: 0 0 0 1em;
+
+      @media screen and (max-width: 1090px) {
+        margin: 1em 0;
+      }
+
+    }
+
+  }
+
 }
 
-#map-edit-form {
-  margin-top: 0.5em;
-}
-
-#map-edit-form label {
-  margin: 0 1em 0 1em;
-}
-
-#map-edit-form button:hover {
-  background-color: $darkRed;
-}
-
-#map-edit-form button{
-  background-color: $lightGrey;
-  margin: 0 0 0 1em;
-}
+// Map Display
 
 .map-container {
   width: 100vw;
-  height: 575px;
-  position: relative !important;
-  overflow: hidden !important;
-  margin-top: 4em;
-  z-index: 3;
-}
-.map-location-container {
-  width: 25vw;
-  min-width: 200px;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: width 0.3s, max-height 0.3s;
-}
-.map-locations {
-  background: $lightGrey;
-  height: 100%;
-}
-.locations-header {
-  background: $lightGrey;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
+  height: 77vh;
   position: relative;
-  z-index: 2;
-  box-sizing: border-box;
-  width: 100%;
-}
-
-.locations-header div:hover {
-  color: $darkRed;
-}
-
-.locations-header div {
-  line-height: 24px;
-  font-size: 16px;
-  transition: width 0.3s;
-  padding: 0 1em 0 0;
-}
-
-.location-list-container {
-  overflow-y: auto;
-  height: calc(100% - 40px);
-  position: relative;
-  left: 0px;
-  transition: left 0.3s;
-  z-index: 1;
-  background: #fff;
-  box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-}
-.location{
-  position: relative;
-  padding: 12px;
-  background: #fff;
-  cursor: pointer;
-  box-sizing: border-box;
-  transition: box-shadow 0.3s, background 0.3s;
-  min-height: 94px;
-  border-bottom: 1px solid $lightGrey;
-}
-.location:hover {
-  box-shadow: inset 0 0 0 2px $primaryRed, 0 2px 6px rgba(0,0,0,0.1);
-  z-index: 1;
-  cursor: default;
-}
-
-.location-picture{
-  position: relative;
-  float: right;
-  width: 70px;
-  height: 70px;
-  border-radius: 4px;
   overflow: hidden;
-  margin-left: 12px;
-  margin-bottom: 12px;
-}
-
-.location-picture img {
-  width: 4.5em;
-  height: 100%;
-}
-
-.location-info{
-  margin: 8px 0 0 0;
-  font-size: 12px;
-  color: #000;
-}
-.location-name{
-  font-weight: 700;
-  font-size: 15px;
-  margin-top: -7px;
-  margin-bottom: 5px;
-  color: $darkRed
-}
-.location-address{
-  font-weight: 600;
-}
-
-.marker-maker {
-  overflow-y: auto;
-  height: calc(100% - 40px);
-  position: relative;
-  left: 0px;
-  transition: left 0.3s;
   z-index: 3;
-  background: #fff;
-  box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-}
 
-.google-map-container {
-  height: 100%;
-  width: 75vw;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  background-color: rgb(229, 227, 223);
-  z-index: 0;
-  padding: 0px;
-  border-width: 0px;
-  margin: 0px;
-  cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default;
-  touch-action: pan-x pan-y;
-}
+  .map-location-container {
+    width: 25vw;
+    min-width: 200px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 
-//map div
-#map {
-  height:100%;
-  margin: auto;
-}
+    .map-locations {
+      background: $lightGrey;
+      height: 100%;
 
-.map-title{
-  text-align: center;
-}
+      .locations-header {
+        background: $lightGrey;
+        padding: 8px 16px;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        box-sizing: border-box;
+        width: 100%;
 
-#fullsize {
-  width: 100vw;
-}
+        div:hover {
+          color: $darkRed;
+        }
 
-// ------------------------- MAP INDEX PAGE ------------------------- //
+        div {
+          line-height: 24px;
+          font-size: 16px;
+          transition: width 0.3s;
+          padding: 0 1em 0 0;
+        }
 
-#markerMaker {
-  display: flex;
-  justify-content: center;
+      }
 
-  div.form-group {
-    width: 100%;
-    padding: 0em 1em;
+    }
 
-    label, input {
+  }
+
+
+
+
+
+
+
+  .location-list-container {
+    overflow-y: auto;
+    height: calc(100% - 40px);
+    position: relative;
+    left: 0px;
+    transition: left 0.3s;
+    z-index: 1;
+    background: #fff;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  }
+  .location{
+    position: relative;
+    padding: 12px;
+    background: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s, background 0.3s;
+    min-height: 94px;
+    border-bottom: 1px solid $lightGrey;
+  }
+  .location:hover {
+    box-shadow: inset 0 0 0 2px $primaryRed, 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 1;
+    cursor: default;
+  }
+
+  .location-picture{
+    position: relative;
+    float: right;
+    width: 70px;
+    height: 70px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-left: 12px;
+    margin-bottom: 12px;
+  }
+
+  .location-picture img {
+    width: 4.5em;
+    height: 100%;
+  }
+
+  .location-info{
+    margin: 8px 0 0 0;
+    font-size: 12px;
+    color: #000;
+  }
+  .location-name{
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: -7px;
+    margin-bottom: 5px;
+    color: $darkRed
+  }
+  .location-address{
+    font-weight: 600;
+  }
+
+  .marker-maker {
+    overflow-y: auto;
+    height: calc(100% - 40px);
+    position: relative;
+    left: 0px;
+    transition: left 0.3s;
+    z-index: 3;
+    background: #fff;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  }
+
+  .google-map-container {
+    height: 100%;
+    width: 75vw;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: rgb(229, 227, 223);
+    z-index: 0;
+    padding: 0px;
+    border-width: 0px;
+    margin: 0px;
+    cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur), default;
+    touch-action: pan-x pan-y;
+  }
+
+  //map div
+  #map {
+    height:100%;
+    margin: auto;
+  }
+
+  .map-title{
+    text-align: center;
+  }
+
+  #fullsize {
+    width: 100vw;
+  }
+
+  // ------------------------- MAP INDEX PAGE ------------------------- //
+
+  #markerMaker {
+    display: flex;
+    justify-content: center;
+
+    div.form-group {
       width: 100%;
+      padding: 0em 1em;
+
+      label, input {
+        width: 100%;
+      }
     }
   }
-}
 
 
-.gm-style-iw {
-    height: auto;
-    width: 220px;
-    padding: 5px;
-}
+  .gm-style-iw {
+      height: auto;
+      width: 220px;
+      padding: 5px;
+  }
 
-.point-image {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 95%;
-  height: 95%;
-}
+  .point-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    height: 95%;
+  }
 
-.gmnoprint {
-  display: none;
-}
+  .gmnoprint {
+    display: none;
+  }
 
-.gm-fullscreen-control{
-  display: none;
+  .gm-fullscreen-control{
+    display: none;
+  }
+
 }

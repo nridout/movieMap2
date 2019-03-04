@@ -12,10 +12,11 @@ body {
   margin: 0;
   z-index:2;
   background-color: $lightGrey;
+  margin-top: 105px;
 
   .container {
-    padding-top: 7em;
-    height: 840px;
+    height: 97vh;
+    position: relative;
   }
 
   .btn:hover {
@@ -25,17 +26,32 @@ body {
   }
 
   .btn {
-    margin: .5em 0.2em 0 0;
     background-color: $darkGrey;
     border-color: $darkGrey;
     color: #ffffff;
   }
 
-  .footer-text {
+  .btn-group-xs > .btn, .btn-xs {
+    padding  : .4rem;
+    font-size  : .875rem;
+    line-height  : .5;
+    border-radius : .2rem;
+    font-weight: lighter;
+  }
+
+  .footer {
     text-align: center;
-    font-size: 14px;
-    padding-top: 5px;
+    font-size: .8em;
     color: #d8d8d8;
+    height: 3vh;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  p {
+    margin-top: 0.5rem;
   }
 
 }
@@ -45,9 +61,9 @@ body {
 
 // background
 .masthead {
-  height: 100vh;
-  min-height: 500px;
-  background-image: url('/img/mapbkgrd.png');
+  height: 97vh;
+  margin-top: -120px;
+  background-image: url(/img/mapbkgrd.png);
   background-size: cover;
   background-position: center;
   z-index: -1;
@@ -103,6 +119,11 @@ body {
       margin-top: 1.3em;
       text-align: center;
       margin-bottom: 1.3em;
+
+      .btn {
+        margin: .5em 0.2em 0 0;
+      }
+
     }
 
   }
@@ -116,7 +137,7 @@ body {
   font-size: 20px;
   position: fixed;
   width: auto;
-  z-index: 4;
+  z-index: 10;
   right: 0px;
   left: 0px;
 

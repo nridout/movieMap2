@@ -107,6 +107,7 @@
     var infowindow = new google.maps.InfoWindow();
 
     var marker;
+    var markerSet = {};
 
     $.ajax(`/maps/${<%=map.id%>}/points`)
     .then(function (points) {
@@ -115,6 +116,8 @@
           position: new google.maps.LatLng(points[i].latitude, points[i].longitude),
           map: mapp
         });
+
+        markerSet[points[i].id] = marker;
 
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
@@ -129,14 +132,14 @@
 
         var pointLocation = `
           <div class="location" data-id="${points[i].id}">
-            <div class="location-picture">
-              <img src="${points[i].image}">
+            <div class="location-picture" data-id="${points[i].id}">
+              <img src="${points[i].image}" data-id="${points[i].id}">
             </div>
-            <div class="location-info">
-              <div class="location-name">${points[i].name}</div>
-              <div class="location-address">${points[i].location}</div>
-              <div class="location-details">${points[i].details}</div>
-              <div class="location-buttons">
+            <div class="location-info" data-id="${points[i].id}">
+              <div class="location-name" data-id="${points[i].id}">${points[i].name}</div>
+              <div class="location-address" data-id="${points[i].id}">${points[i].location}</div>
+              <div class="location-details" data-id="${points[i].id}">${points[i].details}</div>
+              <div class="location-buttons" data-id="${points[i].id}">
                 <button class="btn edit-button-point btn-sm" data-id="${points[i].id}">Edit</button>
                 <button class="btn delete-button-point btn-sm" data-id="${points[i].id}">Delete</button>
               </div>
@@ -147,13 +150,11 @@
         $(".location-list-container").append(pointLocation);
 
         //THIS IS SUPPOSED TO MAKE THE LOCATIONS CLICK THE MARKERS
-        // $('.location').on('click', function() {
-        //   var location_id = $(this).data().id;
-        //   console.log('click', location_id);
-        //   google.maps.event.trigger(marker, 'click');
-        // })
-
       }
+    });
+
+    $(".location-list-container").on('click', "div.location", function(e) {
+      google.maps.event.trigger(markerSet[$(e.target).data().id], 'click');
     });
 
     var handleDeletePoint = function (e) {

@@ -185,9 +185,7 @@ app.post("/maps", (req, res) => {
       for (const row of rows_maps) {
         map_names.push(row.name);
       }
-      console.log(map_names);
       if (!map_names.includes(req.body.name)) {
-        console.log('can put in~');
         // ** TODO: check if location is valid
         //***********************************
         // AND use API to find latitude/longitude data and also store them

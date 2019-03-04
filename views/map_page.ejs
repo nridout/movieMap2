@@ -120,7 +120,7 @@
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
             infowindow.setContent(`
-              <img class="point-image" src=${points[i].image} alt="point image" height = "150" width = "180">
+              <img class="point-image" src=${points[i].image} alt="point image">
               <h3>${points[i].name}</h3>
               <p>${points[i].details}</p>
             `);

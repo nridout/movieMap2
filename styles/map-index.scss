@@ -11,6 +11,11 @@ $darkGrey: #424242;
   color: $darkGrey;
   margin-bottom: 3.5em;
   text-align: center;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 2em;
+  }
+
 }
 
 a:hover {
@@ -125,3 +130,4 @@ a:hover {
   }
 
 }
+

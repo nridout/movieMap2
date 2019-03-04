@@ -12,10 +12,11 @@ body {
   margin: 0;
   z-index:2;
   background-color: $lightGrey;
+  margin-top: 105px;
 
   .container {
-    padding-top: 7em;
-    height: 840px;
+    height: 97vh;
+    position: relative;
   }
 
   .btn:hover {
@@ -31,11 +32,19 @@ body {
     color: #ffffff;
   }
 
-  .footer-text {
+  .footer {
     text-align: center;
-    font-size: 14px;
-    padding-top: 5px;
+    font-size: .8em;
     color: #d8d8d8;
+    height: 3vh;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  p {
+    margin-top: 0.5rem;
   }
 
 }
@@ -45,9 +54,9 @@ body {
 
 // background
 .masthead {
-  height: 100vh;
-  min-height: 500px;
-  background-image: url('/img/mapbkgrd.png');
+  height: 97vh;
+  margin-top: -120px;
+  background-image: url(/img/mapbkgrd.png);
   background-size: cover;
   background-position: center;
   z-index: -1;
@@ -132,7 +141,9 @@ body {
 
 }
 
-
+.fixed-top-2 {
+    margin-top: 56px;
+}
 
 
 

@@ -90,26 +90,24 @@
 
  <script>
 
+  // Initializes Google Maps API
   function initMap(){
     var options = {
       zoom: 14,
       center: {lat:<%= map.latitude %>, lng: <%= map.longitude %>}
     }
 
-    //new mapp
+    // New Mapp
     var mapp = new google.maps.Map(document.getElementById('map'), options);
 
-    // var marking = new google.maps.Marker({
-    //   position: myLatLng,
-    //   map: mapp,
-    //   title: 'Hello World!'
-    // });
-
+    // New Info Window
     var infowindow = new google.maps.InfoWindow();
 
+    // Markers
     var marker;
     var markerSet = {};
 
+    // Loads the Map points
     $.ajax(`/maps/${<%=map.id%>}/points`)
     .then(function (points) {
       for (var i = 0; i < points.length; i++) {
@@ -120,6 +118,7 @@
 
         markerSet[points[i].id] = marker;
 
+        // Loads the Info Windows
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
             infowindow.setContent(`
@@ -131,6 +130,7 @@
           }
         })(marker, i));
 
+        // Loads the Locations in the Location List
         var pointLocation = `
           <div class="location" data-id="${points[i].id}">
             <div class="location-picture" data-id="${points[i].id}">
@@ -150,14 +150,15 @@
 
         $(".location-list-container").append(pointLocation);
 
-        //THIS IS SUPPOSED TO MAKE THE LOCATIONS CLICK THE MARKERS
       }
     });
 
+    // Loads the corresponding info window when clicking on the location
     $(".location-list-container").on('click', "div.location", function(e) {
       google.maps.event.trigger(markerSet[$(e.target).data().id], 'click');
     });
 
+    // Deletes the Points
     var handleDeletePoint = function (e) {
       e.preventDefault();
 
@@ -167,6 +168,7 @@
       });
     };
 
+    // Updates the points
     var handleUpdatePoint = function (e) {
       e.preventDefault();
 
@@ -215,12 +217,9 @@
         `);
       };
 
-      // $.ajax(`/maps/${<%=map.id%>}/points/${$(e.target).data().id}`, {method: "DELETE"})
-      // .then(function (data) {
-      //   location.reload();
-      // });
     }
 
+    // Creates new points from the map selection
     var handleInmapPoint = function (e) {
       event.preventDefault();
 
@@ -255,6 +254,7 @@
         map: mapp
       });
 
+      // Sets the Info window for clicked points
       google.maps.event.addListener(newMarker, 'click', (function(nmarker) {
         return function() {
           infowindow.setContent(`

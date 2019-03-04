@@ -31,9 +31,9 @@
   <div class="form-group mb-2" id="map-edit-form">
     <form class="form-inline" action="/maps/<%= map.id %>?_method=PUT" method="POST">
         <label for="email">Name:</label>
-        <input class="form-control ml-0" id="update-name" type="text" name="name" placeholder="<%= map.name %>" required>
+        <input class="form-control ml-0" id="update-name" type="text" name="name" placeholder="<%= map.name %>">
         <label for="email">Location:</label>
-        <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>" required>
+        <input class="form-control ml-0" type="text" name="location" placeholder="<%= map.location %>">
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
   </div>
@@ -65,7 +65,7 @@
               </div>
               <div class="my-2">
                 <label for="location">Image:</label>
-                <input id="markerImage" class="form-control mt-0" type="text" name="image" required>
+                <input id="markerImage" class="form-control mt-0" type="text" name="image">
               </div>
               <div class="my-2">
                 <label for="location">Details:</label>

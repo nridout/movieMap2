@@ -71,7 +71,7 @@
                 <label for="location">Details:</label>
                 <input id="markerDetails" class="form-control mt-0" type="text" name="details" required>
               </div>
-              <button type="submit" class="btn btn-lg btn-primary new-point-submit">Submit</button>
+              <button type="submit" class="btn btn-md btn-primary new-point-submit">Submit</button>
             </div>
           </form>
         </div>
@@ -120,9 +120,9 @@
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
             infowindow.setContent(`
+              <img class="point-image" src=${points[i].image} alt="point image" height = "150" width = "180">
               <h3>${points[i].name}</h3>
               <p>${points[i].details}</p>
-              <img class="point-image" src=${points[i].image} alt="point image" height = "150" width = "180">
             `);
             infowindow.open(mapp, marker);
           }
@@ -138,8 +138,8 @@
               <div class="location-address">${points[i].location}</div>
               <div class="location-details">${points[i].details}</div>
               <div class="location-buttons">
-                <button class="btn edit-button-point btn-sm" data-id="${points[i].id}">Edit</button>
-                <button class="btn delete-button-point btn-sm" data-id="${points[i].id}">Delete</button>
+                <button class="btn edit-button-point btn-xs" data-id="${points[i].id}">Edit</button>
+                <button class="btn delete-button-point btn-xs" data-id="${points[i].id}">Delete</button>
               </div>
             </div>
           </div>

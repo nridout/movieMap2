@@ -209,6 +209,32 @@ $darkGrey: #424242;
 
             .location-buttons {
               margin-top: 1em;
+
+              .update-points-form {
+                display: flex;
+                flex-direction: column;
+                margin-top: 0.3em;
+                align-items: center;
+
+                div {
+                  display: flex;
+                  margin: 0.3em 0.1em;
+
+                  label {
+                    vertical-align: middle;
+                  }
+
+                  input[type="text"] {
+                    flex-grow: 1;
+                    margin-left: 0.2em;
+                  }
+                }
+
+                .update-point-button {
+                  flex-grow: 0;
+                  width: 40%;
+                }
+              }
             }
 
           }

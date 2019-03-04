@@ -190,19 +190,27 @@
 
         $(e.target).parent().append(`
           <form class="update-points-form" data-id="${$(e.target).data().id}">
-            <label for="update-point-name">Name: </label>
-            <input class="update-point-name" type="text" name="name">
+            <div>
+              <label for="update-point-name">Name: </label>
+              <input class="update-point-name" type="text" name="name">
+            </div>
 
-            <label for="update-point-image">Image: </label>
-            <input class="update-point-image" type="text" name="image">
+            <div>
+              <label for="update-point-image">Image: </label>
+              <input class="update-point-image" type="text" name="image">
+            </div>
 
-            <label for="update-point-details">Details: </label>
-            <input class="update-point-details" type="text" name="details">
+            <div>
+              <label for="update-point-details">Details: </label>
+              <input class="update-point-details" type="text" name="details">
+            </div>
 
-            <label for="update-point-location">Location: </label>
-            <input class="update-point-location" type="text" name="location">
+            <div>
+              <label for="update-point-location">Location: </label>
+              <input class="update-point-location" type="text" name="location">
+            </div>
 
-            <input type="submit" class="btn btn-sm update-point-button" value="Update">
+            <input type="submit" class="btn btn-xs update-point-button" value="Update">
           </form>
         `);
       };

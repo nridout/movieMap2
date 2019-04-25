@@ -49,6 +49,8 @@
 - Has Login and Register button
 - The navbar also has login and register button, and will only have those buttons if not logged in
 
+!["Movie Maps Landing Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-home.png)
+
 ### Login/Register Page
 
 - Log in with email and password
@@ -56,12 +58,16 @@
 - They have forms connected to the POST route
 - Once logged in, a session cookie with its signed value will be saved
 
+!["Movie Maps Login Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-login.png)
+
 ### Maps Index Page
 
 - Lists all the created maps in a grid list
 - Each map is related to a specific movie
 - Shows the thumbnail of the map, name of the map, and username of the creator
 - Shows how many users favourited the map
+
+!["Movie Maps Index Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-index.png)
 
 ### Maps Individual Page
 
@@ -76,11 +82,16 @@
 - Delete buttons are present for the map itself and the points
 - Favourite button is in the second navbar to favourite the map
 
+!["Movie Maps Map Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-map-page.png)
+!["Movie Maps Map Point"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-map-point.png)
+
 ### Create Maps/Search Maps
 
 - Create maps page has a form to enter name and location for the new map
 - Search maps page has a form to enter a search query where it will redirect the user to the results page
 - Search results are displayed in a separate page, displaying the results in a way maps index page does
+
+!["Movie Maps New Map"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-new-map.png)
 
 ### Profile Page
 
@@ -89,6 +100,12 @@
 - The page shows three lists: Created maps, Favourite maps, and Contributed maps
 - Contributed maps are where the users have created any points in the map
 
+!["Movie Maps Profile Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-userpage.png)
+
 ### Responsiveness
 
 - Our page is mobile friendly
+
+!["Movie Maps Landing Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-mobile-index.png)
+!["Movie Maps Landing Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-mobile-map.png)
+!["Movie Maps Landing Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-mobile-userpage.png)

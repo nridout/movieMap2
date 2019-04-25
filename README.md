@@ -100,7 +100,7 @@
 - The page shows three lists: Created maps, Favourite maps, and Contributed maps
 - Contributed maps are where the users have created any points in the map
 
-!["Movie Maps Profile Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-userpage.png)
+!["Movie Maps Profile Page"](https://github.com/nridout/movieMap2/blob/master/docs/movie-maps-user-profile.png)
 
 ### Responsiveness
 

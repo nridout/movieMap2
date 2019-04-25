@@ -1,0 +1,35 @@
+<% include ./partials/header %>
+
+<div class="container">
+  <div class="map-index-title">
+    <h2>Search Results for: <%= query %></h2>
+  </div>
+  <% for (var map of maps) { %>
+  <ol class="map-list">
+    <li class="map-object">
+      <div class="map-boarder">
+        <div class="map-shot">
+          <div class="map-img">
+            <a class="map-link" href="/maps/<%= map.mid %>">
+              <picture>
+                <img class="screenshot" src="https://maps.googleapis.com/maps/api/staticmap?center=<%= map.latitude %>,<%= map.longitude %>&zoom=14&size=200x150&key=AIzaSyCri7Bud131ZI5QakCVxsPsV2cDZTQkU2g">
+              </picture>
+            </a>
+          </div>
+          <div class="tools">
+            <a class="map-name-link" href="/maps/<%= map.mid %>"><%= map.name %></a>
+          </div>
+        </div>
+      </div>
+      <h2 class="map-creator">
+        <span class="creator-id">
+          <a class="user-profile-link" href="/users/<%= map.username %>"><%= map.username %></a>
+        </span>
+      </h2>
+    </li>
+  </ol>
+  <% } %>
+</div>
+<div class="clear"></div>
+
+<% include ./partials/footer %>

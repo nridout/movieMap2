@@ -724,6 +724,38 @@ app.delete("/maps/:id/favourite", (req, res) => {
   }
 });
 
+app.get("/search", (req, res) => {
+  if (req.session.userid) {
+    knex.select('*').from('users')
+    .where('id', req.session.userid)
+    .then(function (rows_user) {
+      return res.status(200).render("search", {isLogged: true, username: rows_user[0].username});
+    });
+  } else {
+    return res.redirect("/login");
+  }
+});
+
+app.get("/output", (req, res) => {
+  if (req.session.userid) {
+
+    knex.select('maps.id AS mid', 'location', 'name', 'username', 'latitude', 'longitude').from('maps')
+    .innerJoin('users', 'users.id', 'maps.creator_id')
+    .where('location', 'like', `%${req.query.name}%`)
+    .orWhere('name', 'like', `%${req.query.name}%`)
+    .orWhere('username', 'like', `%${req.query.name}%`)
+    .then(function (rows_maps) {
+      knex.select('*').from('users')
+      .where('id', req.session.userid)
+      .then(function (rows_user) {
+        res.status(200).render("output", {maps: rows_maps, query: req.query.name, isLogged: true, username: rows_user[0].username});
+      });
+    });
+  } else {
+    return res.redirect("/login");
+  }
+});
+
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
